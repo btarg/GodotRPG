@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bwrm0kxlr0m34"]
+
+[node name="RichTextLabel" type="RichTextLabel"]
+texture_filter = 1
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "Hello world"
+fit_content = true
