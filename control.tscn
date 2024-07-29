@@ -13,5 +13,5 @@ script = ExtResource("1_w63vb")
 
 [node name="InventoryList" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 1152.0
+offset_right = 586.0
 offset_bottom = 67.0

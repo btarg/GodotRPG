@@ -1,8 +1,9 @@
-[gd_scene format=3 uid="uid://bwrm0kxlr0m34"]
+[gd_scene load_steps=2 format=3 uid="uid://bwrm0kxlr0m34"]
 
-[node name="RichTextLabel" type="RichTextLabel"]
-texture_filter = 1
-theme_override_font_sizes/normal_font_size = 48
-bbcode_enabled = true
+[ext_resource type="Texture2D" uid="uid://dditb36nu4s3h" path="res://Assets/Icons/item_misc.png" id="1_iqtyo"]
+
+[node name="Button" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
 text = "Hello world"
-fit_content = true
+icon = ExtResource("1_iqtyo")
