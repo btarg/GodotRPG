@@ -20,15 +20,55 @@ func add_item(item: BaseInventoryItem, count: int = 1) -> void:
 		# Add the item to the inventory
 		items[item.item_id] = {"resource": item, "count": count}
 		is_new_item = true
-	emit_signal("inventory_updated", item, count, is_new_item)
+	emit_signal("inventory_updated", item, items[item.item_id]["count"], is_new_item)
 
-# Function to get item count
+# Remove an existing item by its resource reference or item ID
+func remove_item(item: Variant, count: int) -> void:
+	var item_id: String
+	var item_resource: BaseInventoryItem
+	
+	# Determine if the item is a BaseInventoryItem or a String
+	if item is BaseInventoryItem:
+		print("Item is BaseInventoryItem")
+		item_id = item.item_id
+		item_resource = item
+	elif item is String:
+		print("Item is String")
+		item_id = item
+		item_resource = get_item(item_id)
+	else:
+		push_error("Invalid item type. Must be BaseInventoryItem or String.")
+		return
+	
+	if item_id in items:
+		var current_count = items[item_id]["count"]
+		print("Current count: " + str(current_count))
+		var new_count = current_count - count
+		print("New count: " + str(new_count))
+		if new_count <= 0:
+			print("Removing item from inventory")
+			items.erase(item_id)
+			new_count = 0
+		else:
+			print("Updating item count")
+			items[item_id]["count"] = new_count
+		emit_signal("inventory_updated", item_resource, new_count, false)
+	else:
+		print("Item not found in inventory.")
+		
+
+# Get the count of an item in the inventory by its item_id
 func get_item_count(item_id: String) -> int:
 	if item_id in items:
 		return items[item_id]["count"]
 	return 0
 
-# Function to print the inventory
+# Get an existing item's resource by its item_id
+func get_item(item_id: String) -> BaseInventoryItem:
+	if item_id in items:
+		return items[item_id]["resource"]
+	return null
+
 func print_inventory() -> void:
 	for item_id in items.keys():
 		print(item_id + ": " + str(items[item_id]["count"]))
