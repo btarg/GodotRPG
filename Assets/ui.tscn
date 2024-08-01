@@ -1,0 +1,207 @@
+[gd_scene load_steps=15 format=3 uid="uid://bbpr3f42wv3f4"]
+
+[ext_resource type="Theme" uid="uid://icpcatdn87hq" path="res://Assets/Themes/theme.tres" id="1_2x5wo"]
+[ext_resource type="Script" path="res://Assets/InventoryMenuManager.gd" id="1_jin5a"]
+[ext_resource type="Script" path="res://Scripts/Inventory/InventoryManager.gd" id="1_vihhl"]
+[ext_resource type="FontFile" uid="uid://cyirsy6dpmomc" path="res://Assets/Fonts/BebasNeue-Regular.ttf" id="1_wunqk"]
+[ext_resource type="FontFile" uid="uid://cq5dmd56sdm2c" path="res://Assets/Fonts/Impact/impact.ttf" id="2_gu8wa"]
+[ext_resource type="LabelSettings" uid="uid://v0m6ms4lq5wv" path="res://Assets/Themes/info_label_settings.tres" id="8_u0fe3"]
+[ext_resource type="StyleBox" uid="uid://blopy0052vcnp" path="res://Assets/Themes/new_style_box_flat.tres" id="11_8ljkn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_suspb"]
+
+[sub_resource type="Gradient" id="Gradient_ejbmd"]
+offsets = PackedFloat32Array(0, 0.195349)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_m7d74"]
+gradient = SubResource("Gradient_ejbmd")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ewnhs"]
+bg_color = Color(0, 0.992157, 0.0980392, 0.588235)
+skew = Vector2(0.275, 0)
+expand_margin_left = 64.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t24to"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+expand_margin_left = 1024.0
+expand_margin_right = 170.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_k5v2p"]
+font_size = 64
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_q0fna"]
+size = Vector2(64, 64)
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_vihhl")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jin5a")
+
+[node name="PanelContainer2" type="PanelContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 206.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_suspb")
+
+[node name="TextureRect" type="TextureRect" parent="Control/PanelContainer2"]
+layout_mode = 2
+texture = SubResource("GradientTexture1D_m7d74")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 220
+
+[node name="BackgroundPanel" type="PanelContainer" parent="Control/PanelContainer2/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ewnhs")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel"]
+layout_mode = 2
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 54
+alignment = 1
+
+[node name="TitlePanelContainer" type="PanelContainer" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t24to")
+
+[node name="Title" type="HBoxContainer" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2/TitlePanelContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 2
+
+[node name="Control" type="Control" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2/TitlePanelContainer/Title"]
+custom_minimum_size = Vector2(42, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2/TitlePanelContainer/Title"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_wunqk")
+text = "stock"
+label_settings = SubResource("LabelSettings_k5v2p")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="TextureRect" type="TextureRect" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2/TitlePanelContainer/Title"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = SubResource("PlaceholderTexture2D_q0fna")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="Label2" type="Label" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2/TitlePanelContainer/Title"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.310617, 0.310617, 0.310617, 1)
+theme_override_fonts/font = ExtResource("1_wunqk")
+text = "special"
+label_settings = SubResource("LabelSettings_k5v2p")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 36
+alignment = 1
+
+[node name="InventoryElements" type="VBoxContainer" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="InfoBox" type="VBoxContainer" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+
+[node name="InfoTitle" type="Label" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer/InfoBox"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("1_2x5wo")
+theme_type_variation = &"TipLabel"
+theme_override_font_sizes/font_size = 18
+text = "INFO"
+horizontal_alignment = 1
+
+[node name="InfoDesc" type="Label" parent="Control/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2/VBoxContainer/HBoxContainer/InfoBox"]
+custom_minimum_size = Vector2(350, 200)
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("1_2x5wo")
+text = "Deals massive WIND dmg
+to a single enemy.Lorem Ipsum
+Lorem Ipsum
+Lorem IpsumLorem Ipsum
+Lorem Ipsum
+Lorem Ipsum
+Lorem Ipsum
+Lorem Ipsum
+Lorem Ipsum
+Lorem Ipsum
+Lorem Ipsum
+Lorem Ipsum
+Lorem Ipsum
+Lorem Ipsum
+Lorem Ipsum"
+label_settings = ExtResource("8_u0fe3")
+autowrap_mode = 2
+clip_text = true
+text_overrun_behavior = 4
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 2
+offset_left = 16.0
+offset_top = 552.0
+offset_right = 607.0
+offset_bottom = 663.0
+rotation = -1.309
+theme_override_colors/font_color = Color(0.337255, 1, 0.556863, 1)
+theme_override_fonts/font = ExtResource("2_gu8wa")
+theme_override_font_sizes/font_size = 81
+text = "SPELL INVENTORY"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SelectPanel" type="Panel" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -32.0
+offset_right = -10.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("11_8ljkn")

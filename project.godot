@@ -11,10 +11,17 @@ config_version=5
 [application]
 
 config/name="Inventory"
-run/main_scene="res://control.tscn"
+run/main_scene="res://Assets/ui.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 InventoryManager="*res://Scripts/Inventory/InventoryManager.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep_width"

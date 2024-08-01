@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwrm0kxlr0m34"]
-
-[ext_resource type="Texture2D" uid="uid://dditb36nu4s3h" path="res://Assets/Icons/item_misc.png" id="1_iqtyo"]
-
-[node name="Button" type="Button"]
-offset_right = 8.0
-offset_bottom = 8.0
-text = "Hello world"
-icon = ExtResource("1_iqtyo")
