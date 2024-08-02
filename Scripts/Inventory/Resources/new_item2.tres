@@ -6,6 +6,6 @@
 script = ExtResource("1_10e56")
 item_type = 2
 item_id = "test_item_2"
-item_name = "Even Cooler Item"
-item_description = "Another test description"
+item_name = "Chicka-Cherry™️ Cola"
+item_description = "Delicious and refreshing, this cola is the perfect pick-me-up for any time of day."
 max_stack = 999

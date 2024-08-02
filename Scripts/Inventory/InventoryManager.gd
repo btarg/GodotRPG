@@ -5,6 +5,20 @@ var items: Dictionary = {}
 
 signal inventory_updated
 
+
+func _on_item_used(status: BaseInventoryItem.UseStatus) -> void:
+	match status:
+		BaseInventoryItem.UseStatus.CONSUMED_HP:
+			print("Item used to restore HP")
+		BaseInventoryItem.UseStatus.CONSUMED_MP:
+			print("Item used to restore MP")
+		BaseInventoryItem.UseStatus.CANNOT_USE:
+			print("Item cannot be used")
+		BaseInventoryItem.UseStatus.EQUIPPED:
+			print("Item equipped")
+		_:
+			print("Item used")
+
 # Function to add items to the inventory
 func add_item(item: BaseInventoryItem, count: int = 1) -> void:
 	var is_new_item: bool = false
@@ -20,6 +34,7 @@ func add_item(item: BaseInventoryItem, count: int = 1) -> void:
 		# Add the item to the inventory
 		items[item.item_id] = {"resource": item, "count": count}
 		is_new_item = true
+		item.connect("item_used", _on_item_used)
 	emit_signal("inventory_updated", item, items[item.item_id]["count"], is_new_item)
 
 # Remove an existing item by its resource reference or item ID
@@ -47,6 +62,9 @@ func remove_item(item: Variant, count: int) -> void:
 		print("New count: " + str(new_count))
 		if new_count <= 0:
 			print("Removing item from inventory")
+			# disconnect signal for use
+			item_resource.disconnect("item_used", _on_item_used)
+			# erase item from map
 			items.erase(item_id)
 			new_count = 0
 		else:

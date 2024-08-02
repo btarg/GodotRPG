@@ -8,4 +8,4 @@ item_type = 4
 item_id = "test_item"
 item_name = "Really Cool Item"
 item_description = "Test Description"
-max_stack = 999
+max_stack = 9999
