@@ -12,18 +12,20 @@ var test_item2 := preload("res://Scripts/Inventory/Resources/new_item2.tres") as
 # Map item id to button
 var item_button_map: Dictionary = {}
 
-@onready var use_sound_player := $inventory_use_sound
+var empty_string := "- NO ITEMS IN INVENTORY -"
 
-func _ready():
+@onready var item_inventory := Inventory.new()
+
+func _ready() -> void:
     # Disable the select panel by default
     $SelectPanel.visible = false
 
-    # Connect to the inventory updated signal
-    InventoryManager.connect("inventory_updated", update_inventory)
+    # Connect to the item_inventory updated signal
+    item_inventory.connect("inventory_updated", update_inventory)
 
-    # Add items to the inventory
-    InventoryManager.add_item(test_item, 10)
-    InventoryManager.add_item(test_item2, 33)
+    # # Add items to the item_inventory
+    # item_inventory.add_item(test_item, 10)
+    # item_inventory.add_item(test_item2, 33)
 
 func test() -> void:
     print("Hello from InventoryMenuManager")
@@ -45,7 +47,7 @@ func _physics_process(delta) -> void:
         # Move offscreen
         $SelectPanel.global_position.y = -1000
         is_moving = false
-        %item_description.text = "- NO ITEM SELECTED -"
+        %item_description.text = empty_string
         
 # recursively get all children that are buttons of the root node
 func _get_button_children(root_node: Node) -> Array:
@@ -65,7 +67,7 @@ func _get_button_children(root_node: Node) -> Array:
 
 func _handleButtonFocus(button: Button) -> void:
     button.grab_focus()
-    %item_description.text = InventoryManager.get_item(button.name).item_description
+    %item_description.text = item_inventory.get_item(button.name).item_description
     # Check if the button is already focused
     if selected_button == button:
         return
@@ -73,7 +75,7 @@ func _handleButtonFocus(button: Button) -> void:
     $hover_sound.play()
 
 func update_inventory(item: BaseInventoryItem, count: int, is_new_item: bool) -> void:
-    print("Updating inventory: " + item.item_name + " x" + str(count))
+    print("Updating item_inventory: " + item.item_name + " x" + str(count))
     if count == 0:
         print("Item count is 0. Removing item.")
         remove_item_button(item)
@@ -137,12 +139,12 @@ func _update_count_label(button_root: Node, count: int) -> void:
 
 func _handle_item_clicked(item_id: String) -> void:
 
-    var item := InventoryManager.get_item(item_id) as BaseInventoryItem
+    var item := item_inventory.get_item(item_id) as BaseInventoryItem
     var status := item.use()
 
     if status == BaseInventoryItem.UseStatus.CONSUMED_HP or status == BaseInventoryItem.UseStatus.CONSUMED_MP:
         print("Item consumed")
-        InventoryManager.remove_item(item_id, 1)
+        item_inventory.remove_item(item_id, 1)
         $inventory_use_sound.set_stream(item.get_use_sound())
         $inventory_use_sound.play()
 
@@ -157,6 +159,6 @@ func _input(event):
     if event is InputEventKey and event.pressed:
         if event.keycode == KEY_T:
             if event.shift_pressed:
-                InventoryManager.remove_item(test_item2, 1)
+                item_inventory.remove_item(test_item2, 1)
             else:
-               InventoryManager.add_item(test_item2, 1)
+               item_inventory.add_item(test_item2, 1)

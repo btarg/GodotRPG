@@ -27,8 +27,7 @@ signal item_used
 var heal_sound := preload("res://Assets/Sounds/heal.wav") as AudioStream
 var mana_sound := preload("res://Assets/Sounds/mana.wav") as AudioStream
 
-# Constructor for easy creation
-func _init(_item_name: String = "", _max_stack: int = 999):
+func _init(_item_name: String = "", _max_stack: int = 999) -> void:
     self.item_name = _item_name
     self.max_stack = _max_stack
 

@@ -26,11 +26,11 @@ skew = Vector2(0.275, 0)
 expand_margin_left = 64.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t24to"]
+content_margin_left = 64.0
 bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+corner_radius_top_right = 75
+corner_radius_bottom_right = 75
+corner_detail = 1
 expand_margin_left = 1024.0
 expand_margin_right = 170.0
 
@@ -85,6 +85,7 @@ alignment = 1
 
 [node name="TitlePanelContainer" type="PanelContainer" parent="InventoryUI/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2"]
 layout_mode = 2
+size_flags_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_t24to")
 
 [node name="Title" type="HBoxContainer" parent="InventoryUI/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2/TitlePanelContainer"]
@@ -135,7 +136,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 16
-alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="InventoryUI/PanelContainer2/MarginContainer/BackgroundPanel/MarginContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
