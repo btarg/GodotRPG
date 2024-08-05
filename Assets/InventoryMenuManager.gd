@@ -15,40 +15,47 @@ var item_button_map: Dictionary = {}
 var empty_string := "- NO ITEMS IN INVENTORY -"
 
 @onready var item_inventory := Inventory.new()
+@onready var select_panel := $SelectPanel as Panel
 
 func _ready() -> void:
-    # Disable the select panel by default
-    $SelectPanel.visible = false
+    # Disable the select select_panel by default
+    select_panel.visible = false
 
     # Connect to the item_inventory updated signal
     item_inventory.connect("inventory_updated", update_inventory)
 
-    # # Add items to the item_inventory
-    # item_inventory.add_item(test_item, 10)
-    # item_inventory.add_item(test_item2, 33)
+    # Add some test items
+    item_inventory.add_item(test_item, 10)
+    item_inventory.add_item(test_item2, 10)
 
 func test() -> void:
     print("Hello from InventoryMenuManager")
 
 func _physics_process(delta) -> void:
+    # lerp the select_panel color back to white for when we change colour on select
+    select_panel.self_modulate = select_panel.self_modulate.lerp(Color.WHITE, 0.15)
+
     if selected_button:
         var selected_y := roundf(selected_button.global_position.y)
-        var panel_y := roundf($SelectPanel.global_position.y)
+        var panel_y := roundf(select_panel.global_position.y)
         
         if selected_y == panel_y:
             is_moving = false
-            return
-        is_moving = true
-        
-        var target_y: float = selected_y - panel_y
-        # Move the select panel towards the selected button
-        $SelectPanel.global_position.y += target_y * 0.25
+
+            # slowly pulse
+            select_panel.scale = Vector2(1.0 + sin(Time.get_ticks_msec() * 0.01) * 0.025, 1.0)
+        else:
+            is_moving = true
+            
+            var target_y: float = selected_y - panel_y
+            # Move the select select_panel towards the selected button
+            select_panel.global_position.y += target_y * 0.25
     else:
         # Move offscreen
-        $SelectPanel.global_position.y = -1000
+        select_panel.global_position.y = -1000
         is_moving = false
         %item_description.text = empty_string
-        
+
 # recursively get all children that are buttons of the root node
 func _get_button_children(root_node: Node) -> Array:
     var button_list: Array = []
@@ -63,7 +70,6 @@ func _get_button_children(root_node: Node) -> Array:
                 stack.append(child)
 
     return button_list
-
 
 func _handleButtonFocus(button: Button) -> void:
     button.grab_focus()
@@ -93,11 +99,11 @@ func remove_item_button(item: BaseInventoryItem) -> void:
         var button_list = _get_button_children(self)
         if button_list.size() > 0:
             selected_button = button_list[0]
-            $SelectPanel.global_position.y = selected_button.global_position.y
+            select_panel.global_position.y = selected_button.global_position.y
             _handleButtonFocus(selected_button)
         else:
             selected_button = null
-            $SelectPanel.global_position.y = -1000
+            select_panel.global_position.y = -1000
             is_moving = false
 
 func add_item(item: BaseInventoryItem, count: int, is_new_item: bool) -> void:
@@ -127,8 +133,8 @@ func add_item(item: BaseInventoryItem, count: int, is_new_item: bool) -> void:
         # If it is the first item, focus it
         if selected_button == null:
             selected_button = new_button
-            $SelectPanel.global_position.y = new_button.global_position.y
-            $SelectPanel.visible = true
+            select_panel.global_position.y = new_button.global_position.y
+            select_panel.visible = true
             _handleButtonFocus(new_button)
     else:
         # Set count label for existing item
@@ -138,7 +144,6 @@ func _update_count_label(button_root: Node, count: int) -> void:
     button_root.get_node("count_panel/count_label").text = "x%03d" % min(count, 999) if count < 999 else "x999+"
 
 func _handle_item_clicked(item_id: String) -> void:
-
     var item := item_inventory.get_item(item_id) as BaseInventoryItem
     var status := item.use()
 
@@ -147,13 +152,22 @@ func _handle_item_clicked(item_id: String) -> void:
         item_inventory.remove_item(item_id, 1)
         $inventory_use_sound.set_stream(item.get_use_sound())
         $inventory_use_sound.play()
+        _flash_select_panel(true)
 
     elif status == BaseInventoryItem.UseStatus.CANNOT_USE:
         print("Item cannot be used")
         $denied_sound.play()
+        _flash_select_panel(false)
     elif status == BaseInventoryItem.UseStatus.EQUIPPED:
         print("Item equipped")
         $click_sound.play()
+        _flash_select_panel(true)
+
+func _flash_select_panel(success: bool = true) -> void:
+    if success:
+        select_panel.self_modulate = Color.AQUA
+    else:
+        select_panel.self_modulate = Color.RED
 
 func _input(event):
     if event is InputEventKey and event.pressed:

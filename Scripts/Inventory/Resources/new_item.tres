@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_10e56")
-item_type = 4
+item_type = 5
 item_id = "test_item"
 item_name = "Really Cool Item"
 item_description = "Test Description"

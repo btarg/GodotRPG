@@ -2,6 +2,7 @@ class_name BaseInventoryItem
 extends Resource
 
 enum ItemType {
+    SPELL,
     WEAPON,
     ARMOR,
     CONSUMABLE_HP,
