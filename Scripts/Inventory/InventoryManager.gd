@@ -12,15 +12,15 @@ func _init() -> void:
 func _on_item_used(status: BaseInventoryItem.UseStatus) -> void:
     match status:
         BaseInventoryItem.UseStatus.CONSUMED_HP:
-            print("Item used to restore HP")
+            print("SIGNAL: Item used to restore HP")
         BaseInventoryItem.UseStatus.CONSUMED_MP:
-            print("Item used to restore MP")
+            print("SIGNAL: Item used to restore MP")
         BaseInventoryItem.UseStatus.CANNOT_USE:
-            print("Item cannot be used")
+            print("SIGNAL: Item cannot be used")
         BaseInventoryItem.UseStatus.EQUIPPED:
-            print("Item equipped")
+            print("SIGNAL: Item equipped")
         _:
-            print("Item used")
+            print("SIGNAL: Item used")
 
 # Function to add items to the inventory
 func add_item(item: BaseInventoryItem, count: int = 1) -> void:

@@ -181,14 +181,14 @@ text_overrun_behavior = 4
 
 [node name="Label" type="Label" parent="InventoryUI"]
 layout_mode = 2
-offset_left = 16.0
-offset_top = 552.0
-offset_right = 607.0
-offset_bottom = 663.0
+offset_left = -56.0
+offset_top = 712.0
+offset_right = 750.0
+offset_bottom = 860.0
 rotation = -1.309
 theme_override_colors/font_color = Color(0.337255, 1, 0.556863, 1)
 theme_override_fonts/font = ExtResource("2_gu8wa")
-theme_override_font_sizes/font_size = 81
+theme_override_font_sizes/font_size = 96
 text = "SPELL INVENTORY"
 horizontal_alignment = 1
 vertical_alignment = 1

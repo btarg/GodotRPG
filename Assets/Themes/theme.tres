@@ -13,7 +13,6 @@ content_margin_left = 0.0
 content_margin_left = 0.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h8dhs"]
-content_margin_left = 0.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bjn4s"]
 content_margin_left = 0.0
@@ -52,8 +51,8 @@ shadow_size = 2
 Button/colors/font_color = Color(1, 1, 1, 1)
 Button/colors/font_focus_color = Color(0, 0, 0, 1)
 Button/colors/font_hover_color = Color(0, 0, 0, 1)
-Button/colors/font_pressed_color = Color(0.0747628, 0.233193, 0.294033, 1)
-Button/colors/icon_hover_pressed_color = Color(0.0745098, 0.231373, 0.294118, 1)
+Button/colors/font_hover_pressed_color = Color(0.164706, 0.419608, 0.501961, 1)
+Button/colors/font_pressed_color = Color(0.164706, 0.419608, 0.501961, 1)
 Button/font_sizes/font_size = 28
 Button/fonts/font = ExtResource("1_wxmjr")
 Button/styles/disabled = SubResource("StyleBoxEmpty_1e3dm")

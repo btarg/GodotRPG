@@ -65,13 +65,18 @@ func get_use_sound() -> AudioStream:
             return null
 
 func use() -> UseStatus:
-    if item_type == ItemType.CONSUMABLE_HP:
-        print("HP Item used: %s" % item_name)
-        emit_signal("item_used", UseStatus.CONSUMED_HP)
-        return UseStatus.CONSUMED_HP
-    elif item_type == ItemType.CONSUMABLE_MP:
-        print("MP Item used: %s" % item_name)
-        return UseStatus.CONSUMED_MP
-    else:
-        print("Item cannot be consumed: %s" % item_name)
-        return UseStatus.CANNOT_USE
+    var status: UseStatus
+
+    match item_type:
+        ItemType.CONSUMABLE_HP:
+            print("HP Item used: %s" % item_name)
+            status = UseStatus.CONSUMED_HP
+        ItemType.CONSUMABLE_MP:
+            print("MP Item used: %s" % item_name)
+            status = UseStatus.CONSUMED_MP
+        _:
+            print("Item cannot be consumed: %s" % item_name)
+            status = UseStatus.CANNOT_USE
+
+    emit_signal("item_used", status)
+    return status

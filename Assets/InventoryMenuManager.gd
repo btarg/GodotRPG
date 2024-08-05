@@ -15,7 +15,15 @@ var item_button_map: Dictionary = {}
 var empty_string := "- NO ITEMS IN INVENTORY -"
 
 @onready var item_inventory := Inventory.new()
-@onready var select_panel := $SelectPanel as Panel
+@onready var select_panel := %SelectPanel as Panel
+@onready var item_description := %item_description as Label
+@onready var inventory_elements := %InventoryElements as VBoxContainer
+
+# Cache sounds
+@onready var hover_sound := $hover_sound as AudioStreamPlayer
+@onready var click_sound := $click_sound as AudioStreamPlayer
+@onready var denied_sound := $denied_sound as AudioStreamPlayer
+@onready var inventory_use_sound := $inventory_use_sound as AudioStreamPlayer
 
 func _ready() -> void:
     # Disable the select select_panel by default
@@ -28,33 +36,34 @@ func _ready() -> void:
     item_inventory.add_item(test_item, 10)
     item_inventory.add_item(test_item2, 10)
 
-func test() -> void:
-    print("Hello from InventoryMenuManager")
-
-func _physics_process(delta) -> void:
-    # lerp the select_panel color back to white for when we change colour on select
-    select_panel.self_modulate = select_panel.self_modulate.lerp(Color.WHITE, 0.15)
-
+func _physics_process(_delta) -> void:
     if selected_button:
         var selected_y := roundf(selected_button.global_position.y)
         var panel_y := roundf(select_panel.global_position.y)
+
+        # lerp the select_panel color back to white for when we change colour on select
+        select_panel.self_modulate = select_panel.self_modulate.lerp(Color.WHITE, 0.15)
         
         if selected_y == panel_y:
             is_moving = false
 
-            # slowly pulse
-            select_panel.scale = Vector2(1.0 + sin(Time.get_ticks_msec() * 0.01) * 0.025, 1.0)
+            # slowly pulse using lerp for smoother transition
+            var pulse_scale := 1.0 + sin(Time.get_ticks_msec() * 0.01) * 0.025
+            select_panel.scale = select_panel.scale.lerp(Vector2(pulse_scale, 1.0), 0.1)
         else:
             is_moving = true
             
             var target_y: float = selected_y - panel_y
             # Move the select select_panel towards the selected button
             select_panel.global_position.y += target_y * 0.25
+
+            # lerp the select select_panel scale to 1.0 quickly
+            select_panel.scale = select_panel.scale.lerp(Vector2(1.0, 1.0), 0.25)
     else:
         # Move offscreen
         select_panel.global_position.y = -1000
         is_moving = false
-        %item_description.text = empty_string
+        item_description.text = empty_string
 
 # recursively get all children that are buttons of the root node
 func _get_button_children(root_node: Node) -> Array:
@@ -73,12 +82,12 @@ func _get_button_children(root_node: Node) -> Array:
 
 func _handleButtonFocus(button: Button) -> void:
     button.grab_focus()
-    %item_description.text = item_inventory.get_item(button.name).item_description
+    item_description.text = item_inventory.get_item(button.name).item_description
     # Check if the button is already focused
     if selected_button == button:
         return
     selected_button = button
-    $hover_sound.play()
+    hover_sound.play()
 
 func update_inventory(item: BaseInventoryItem, count: int, is_new_item: bool) -> void:
     print("Updating item_inventory: " + item.item_name + " x" + str(count))
@@ -90,7 +99,7 @@ func update_inventory(item: BaseInventoryItem, count: int, is_new_item: bool) ->
 
 func remove_item_button(item: BaseInventoryItem) -> void:
     var button = item_button_map[item.item_id]
-    %InventoryElements.remove_child(button)
+    inventory_elements.remove_child(button)
     item_button_map.erase(item.item_id)
     # If the removed button was the selected button,
     # try to focus the next button in the list or
@@ -120,7 +129,7 @@ func add_item(item: BaseInventoryItem, count: int, is_new_item: bool) -> void:
         # Set count label for new item
         _update_count_label(new_button, count)
 
-        %InventoryElements.add_child(new_button)
+        inventory_elements.add_child(new_button)
         item_button_map[item.item_id] = new_button
 
         # Connect signals for the new button
@@ -150,17 +159,17 @@ func _handle_item_clicked(item_id: String) -> void:
     if status == BaseInventoryItem.UseStatus.CONSUMED_HP or status == BaseInventoryItem.UseStatus.CONSUMED_MP:
         print("Item consumed")
         item_inventory.remove_item(item_id, 1)
-        $inventory_use_sound.set_stream(item.get_use_sound())
-        $inventory_use_sound.play()
+        inventory_use_sound.set_stream(item.get_use_sound())
+        inventory_use_sound.play()
         _flash_select_panel(true)
 
     elif status == BaseInventoryItem.UseStatus.CANNOT_USE:
         print("Item cannot be used")
-        $denied_sound.play()
+        denied_sound.play()
         _flash_select_panel(false)
     elif status == BaseInventoryItem.UseStatus.EQUIPPED:
         print("Item equipped")
-        $click_sound.play()
+        click_sound.play()
         _flash_select_panel(true)
 
 func _flash_select_panel(success: bool = true) -> void:
