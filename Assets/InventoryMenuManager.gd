@@ -15,9 +15,13 @@ var item_button_map: Dictionary = {}
 var empty_string := "- NO ITEMS IN INVENTORY -"
 
 @onready var item_inventory := Inventory.new()
-@onready var select_panel := %SelectPanel as Panel
-@onready var item_description := %item_description as Label
+@onready var select_panel := $SelectPanel as Panel
+@onready var select_panel_shadow := $SelectPanelShadow as Panel
+@onready var item_description := %ItemDescription as Label
 @onready var inventory_elements := %InventoryElements as VBoxContainer
+
+@onready var background_panel := %InventoryBackground as PanelContainer
+@onready var tween := create_tween()
 
 # Cache sounds
 @onready var hover_sound := $hover_sound as AudioStreamPlayer
@@ -25,9 +29,16 @@ var empty_string := "- NO ITEMS IN INVENTORY -"
 @onready var denied_sound := $denied_sound as AudioStreamPlayer
 @onready var inventory_use_sound := $inventory_use_sound as AudioStreamPlayer
 
+
+
 func _ready() -> void:
     # Disable the select select_panel by default
     select_panel.visible = false
+    select_panel_shadow.visible = false
+
+    background_panel.material.set("shader_parameter/percentage", 0.0)
+    # lerp the percentage of the shader to 1.0 (tween)
+    tween.tween_property(background_panel.material, "shader_parameter/percentage", 1.0, 0.5)
 
     # Connect to the item_inventory updated signal
     item_inventory.connect("inventory_updated", update_inventory)
@@ -46,22 +57,27 @@ func _physics_process(_delta) -> void:
         
         if selected_y == panel_y:
             is_moving = false
-
-            # slowly pulse using lerp for smoother transition
-            var pulse_scale := 1.0 + sin(Time.get_ticks_msec() * 0.01) * 0.025
-            select_panel.scale = select_panel.scale.lerp(Vector2(pulse_scale, 1.0), 0.1)
+            # calculate the shadow's target position with the offset
+            var shadow_target_pos := select_panel.global_position + Vector2(16, 8)
+            # lerp the shadow's position to the target position
+            select_panel_shadow.global_position = select_panel_shadow.global_position.lerp(shadow_target_pos, 0.25)
+            
         else:
             is_moving = true
             
             var target_y: float = selected_y - panel_y
             # Move the select select_panel towards the selected button
             select_panel.global_position.y += target_y * 0.25
-
+            # calculate the shadow's target position with the offset
+            var shadow_target_pos := select_panel.global_position + Vector2(16, 8)
+            # lerp the shadow's position to the target position
+            select_panel_shadow.global_position = select_panel_shadow.global_position.lerp(shadow_target_pos, 0.25)
             # lerp the select select_panel scale to 1.0 quickly
             select_panel.scale = select_panel.scale.lerp(Vector2(1.0, 1.0), 0.25)
     else:
         # Move offscreen
         select_panel.global_position.y = -1000
+        select_panel_shadow.global_position.y = -1000
         is_moving = false
         item_description.text = empty_string
 
@@ -144,6 +160,7 @@ func add_item(item: BaseInventoryItem, count: int, is_new_item: bool) -> void:
             selected_button = new_button
             select_panel.global_position.y = new_button.global_position.y
             select_panel.visible = true
+            select_panel_shadow.visible = true
             _handleButtonFocus(new_button)
     else:
         # Set count label for existing item
