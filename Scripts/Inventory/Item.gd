@@ -37,23 +37,23 @@ func _init(_item_name: String = "", _max_stack: int = 999) -> void:
     self.max_stack = _max_stack
 
 func get_icon_path() -> String:
-    var icon_path := "res://Assets/Icons/"
+    var icon_path := "res://Assets/Icons/item_"
     match item_type:
         ItemType.WEAPON:
-            icon_path += "item_weapon.png"
+            icon_path += "weapon"
         ItemType.ARMOR:
-            icon_path += "item_misc.png"
+            icon_path += "misc"
         ItemType.CONSUMABLE_HP:
-            icon_path += "item_consumable_hp.png"
+            icon_path += "consumable_hp"
         ItemType.CONSUMABLE_MP:
-            icon_path += "item_consumable_sp.png"
+            icon_path += "consumable_sp"
         ItemType.QUEST:
-            icon_path += "item_quest.png"
+            icon_path += "quest"
         ItemType.MISC:
-            icon_path += "item_misc.png"
+            icon_path += "misc"
         _:
-            icon_path += "item_misc.png"
-    return icon_path
+            icon_path += "misc"
+    return icon_path + ".png"
 
 func get_rich_name(icon_size: int = 64) -> String:
     var icon_path = get_icon_path()

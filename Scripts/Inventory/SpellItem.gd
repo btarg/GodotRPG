@@ -8,13 +8,14 @@ enum SpellAfinity {
     WIND,
     LIGHT,
     DARK,
-    HEAL
+    HEAL,
+    MANA
 }
 
 enum CritBehaviour {
-    CRIT_ON_ANY_NAT,
-    CRIT_ON_ALL_NAT,
-    CRIT_ON_TWICE_DC
+    CRIT_ON_ANY_NAT, # Any of the dice rolled is max value
+    CRIT_ON_ALL_NAT, # All dice rolled are max value
+    CRIT_ON_TWICE_DC # Total roll is twice the difficulty class
 }
 
 @export var spell_affinity: SpellAfinity = SpellAfinity.FIRE
@@ -29,7 +30,6 @@ enum CritBehaviour {
 @export var power_multiplier_crit_success: float = 2.0
 @export var power_multiplier_fail: float = 0.5
 @export var power_multiplier_crit_fail: float = 0.0
-
 
 func get_icon_path() -> String:
     var icon_path := "res://Assets/Icons/elements/"
@@ -56,24 +56,33 @@ func get_icon_path() -> String:
     icon_path += "_element.png"
     return icon_path
 
+func get_use_sound(status: UseStatus = UseStatus.SPELL_SUCCESS) -> AudioStream:
+    if (spell_affinity == SpellAfinity.HEAL and
+    status == UseStatus.SPELL_SUCCESS or
+    status == UseStatus.SPELL_CRIT_SUCCESS
+    ):
+        return heal_sound
+    return null
+
+
 func use(bonus: int = 0) -> UseStatus:
     var calculated_power: int = spell_power
-    var total_roll: int = 0
+    var total_roll: int = bonus
     var crits: int = 0
     # roll all dice and add together
     for i in range(num_rolls):
         var die := randi() % die_sides + 1
         total_roll += die
         # add upp crits
+        var crit_string := ""
         if die == die_sides:
             crits += 1
-        var crit_string := " (CRIT!)" if die == die_sides else ""
+            crit_string = " (Nat %s!)" % str(die_sides)
+
         print("Roll no." + str(i + 1) + ": " + str(die) + crit_string)
     print("Total Rolls: " + str(total_roll) + " Bonus: " + str(bonus))
-    total_roll += bonus
-
-    var status := UseStatus.CANNOT_USE
     
+    var status := UseStatus.CANNOT_USE
     if total_roll == 1:
         status = UseStatus.SPELL_CRIT_FAIL
         calculated_power = int(calculated_power * (power_multiplier_crit_fail))
@@ -98,7 +107,7 @@ func use(bonus: int = 0) -> UseStatus:
     elif status == UseStatus.SPELL_FAIL:
         print(item_name + " Spell Failed!")
 
-
+    emit_signal("item_used", status)
     return status
 
 func _handle_healing(heal_power: float) -> void:

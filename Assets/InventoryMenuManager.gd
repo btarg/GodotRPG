@@ -32,7 +32,6 @@ var empty_string := "- NO ITEMS IN INVENTORY -"
 @onready var inventory_use_sound := $inventory_use_sound as AudioStreamPlayer
 
 
-
 func _ready() -> void:
     # Disable the select select_panel by default
     select_panel.visible = false
@@ -177,41 +176,40 @@ func _handle_item_clicked(item_id: String) -> void:
     
     var status := item.use()
 
-    var success := false
-    var sound := denied_sound
-
+    var use_success := false
+    var remove := true
     match status:
         BaseInventoryItem.UseStatus.CONSUMED_HP, BaseInventoryItem.UseStatus.CONSUMED_MP:
             print("Item consumed")
-            item_inventory.remove_item(item_id, 1)
-            inventory_use_sound.set_stream(item.get_use_sound())
-            inventory_use_sound.play()
-            success = true
+            use_success = true
         BaseInventoryItem.UseStatus.CANNOT_USE:
             print("Item cannot be used")
+            remove = false
         BaseInventoryItem.UseStatus.EQUIPPED:
             print("Item equipped")
-            sound = click_sound
-            success = true
+            use_success = true
+            remove = false
         BaseInventoryItem.UseStatus.SPELL_CRIT_FAIL:
             print("CRIT FAIL!")
-            item_inventory.remove_item(item_id, 1)
+            use_success = true
         BaseInventoryItem.UseStatus.SPELL_FAIL:
             print("FAIL!")
-            item_inventory.remove_item(item_id, 1)
+            use_success = true
         BaseInventoryItem.UseStatus.SPELL_SUCCESS:
             print("SUCCESS!")
-            sound = click_sound
-            item_inventory.remove_item(item_id, 1)
-            success = true
+            use_success = true
         BaseInventoryItem.UseStatus.SPELL_CRIT_SUCCESS:
             print("CRIT SUCCESS!")
-            sound = click_sound
-            item_inventory.remove_item(item_id, 1)
-            success = true
-
-    sound.play()
-    _flash_select_panel(success)
+            use_success = true
+    
+    if remove == true:  
+        item_inventory.remove_item(item_id, 1)
+    if use_success == true:
+        inventory_use_sound.set_stream(item.get_use_sound())
+        inventory_use_sound.play()
+    else:
+        denied_sound.play()
+    _flash_select_panel(use_success)
 
 func _flash_select_panel(success: bool = true) -> void:
     if success:
