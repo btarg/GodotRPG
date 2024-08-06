@@ -174,23 +174,44 @@ func _update_count_label(button_root: Node, count: int) -> void:
 
 func _handle_item_clicked(item_id: String) -> void:
     var item := item_inventory.get_item(item_id) as BaseInventoryItem
+    
     var status := item.use()
 
-    if status == BaseInventoryItem.UseStatus.CONSUMED_HP or status == BaseInventoryItem.UseStatus.CONSUMED_MP:
-        print("Item consumed")
-        item_inventory.remove_item(item_id, 1)
-        inventory_use_sound.set_stream(item.get_use_sound())
-        inventory_use_sound.play()
-        _flash_select_panel(true)
+    var success := false
+    var sound := denied_sound
 
-    elif status == BaseInventoryItem.UseStatus.CANNOT_USE:
-        print("Item cannot be used")
-        denied_sound.play()
-        _flash_select_panel(false)
-    elif status == BaseInventoryItem.UseStatus.EQUIPPED:
-        print("Item equipped")
-        click_sound.play()
-        _flash_select_panel(true)
+    match status:
+        BaseInventoryItem.UseStatus.CONSUMED_HP, BaseInventoryItem.UseStatus.CONSUMED_MP:
+            print("Item consumed")
+            item_inventory.remove_item(item_id, 1)
+            inventory_use_sound.set_stream(item.get_use_sound())
+            inventory_use_sound.play()
+            success = true
+        BaseInventoryItem.UseStatus.CANNOT_USE:
+            print("Item cannot be used")
+        BaseInventoryItem.UseStatus.EQUIPPED:
+            print("Item equipped")
+            sound = click_sound
+            success = true
+        BaseInventoryItem.UseStatus.SPELL_CRIT_FAIL:
+            print("CRIT FAIL!")
+            item_inventory.remove_item(item_id, 1)
+        BaseInventoryItem.UseStatus.SPELL_FAIL:
+            print("FAIL!")
+            item_inventory.remove_item(item_id, 1)
+        BaseInventoryItem.UseStatus.SPELL_SUCCESS:
+            print("SUCCESS!")
+            sound = click_sound
+            item_inventory.remove_item(item_id, 1)
+            success = true
+        BaseInventoryItem.UseStatus.SPELL_CRIT_SUCCESS:
+            print("CRIT SUCCESS!")
+            sound = click_sound
+            item_inventory.remove_item(item_id, 1)
+            success = true
+
+    sound.play()
+    _flash_select_panel(success)
 
 func _flash_select_panel(success: bool = true) -> void:
     if success:
@@ -202,6 +223,6 @@ func _input(event):
     if event is InputEventKey and event.pressed:
         if event.keycode == KEY_T:
             if event.shift_pressed:
-                item_inventory.remove_item(test_item2, 1)
+                item_inventory.remove_item(test_spell, 1)
             else:
-               item_inventory.add_item(test_item2, 1)
+               item_inventory.add_item(test_spell, 1)

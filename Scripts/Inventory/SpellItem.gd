@@ -10,11 +10,26 @@ enum SpellAfinity {
     DARK,
     HEAL
 }
+
+enum CritBehaviour {
+    CRIT_ON_ANY_NAT,
+    CRIT_ON_ALL_NAT,
+    CRIT_ON_TWICE_DC
+}
+
 @export var spell_affinity: SpellAfinity = SpellAfinity.FIRE
 @export var spell_power: int = 10
-@export var spell_range: int = 1
-@export var rolls: int = 1
-@export var difficulty_class: int = 10
+# @export var spell_range: int = 1
+@export_range(4, 100) var die_sides: int = 20
+@export_range(1, 10) var num_rolls: int = 1
+@export_range(1, 100) var difficulty_class: int = 10
+@export var crit_behaviour: CritBehaviour = CritBehaviour.CRIT_ON_ANY_NAT
+
+@export var power_multiplier_success: float = 1.0
+@export var power_multiplier_crit_success: float = 2.0
+@export var power_multiplier_fail: float = 0.5
+@export var power_multiplier_crit_fail: float = 0.0
+
 
 func get_icon_path() -> String:
     var icon_path := "res://Assets/Icons/elements/"
@@ -39,48 +54,52 @@ func get_icon_path() -> String:
             icon_path = "heal"
 
     icon_path += "_element.png"
-
-
     return icon_path
 
-func use() -> UseStatus:
+func use(bonus: int = 0) -> UseStatus:
+    var calculated_power: int = spell_power
+    var total_roll: int = 0
+    var crits: int = 0
+    # roll all dice and add together
+    for i in range(num_rolls):
+        var die := randi() % die_sides + 1
+        total_roll += die
+        # add upp crits
+        if die == die_sides:
+            crits += 1
+        var crit_string := " (CRIT!)" if die == die_sides else ""
+        print("Roll no." + str(i + 1) + ": " + str(die) + crit_string)
+    print("Total Rolls: " + str(total_roll) + " Bonus: " + str(bonus))
+    total_roll += bonus
 
-    # Roll d20s based on roll amount
-    var roll := 0
-    for i in range(rolls):
-        roll += randi() % 20 + 1
-
-    print("Roll: " + str(roll))
     var status := UseStatus.CANNOT_USE
-    if roll == 1:
+    
+    if total_roll == 1:
         status = UseStatus.SPELL_CRIT_FAIL
-    elif roll == 20:
-        status = UseStatus.SPELL_CRIT_SUCCESS
-    elif roll < difficulty_class - 10:
+        calculated_power = int(calculated_power * (power_multiplier_crit_fail))
+    elif total_roll < difficulty_class:
         status = UseStatus.SPELL_FAIL
-    elif roll >= difficulty_class - 10 and roll < difficulty_class:
-        status = UseStatus.SPELL_SUCCESS
+        calculated_power = int(calculated_power * (power_multiplier_fail))
     else:
-        status = UseStatus.SPELL_FAIL
+        if crits > 0 and (
+            crit_behaviour == CritBehaviour.CRIT_ON_ANY_NAT or
+            crit_behaviour == CritBehaviour.CRIT_ON_ALL_NAT and crits == num_rolls
+        ) or (crit_behaviour == CritBehaviour.CRIT_ON_TWICE_DC and total_roll >= (difficulty_class * 2)):
+            status = UseStatus.SPELL_CRIT_SUCCESS
+            calculated_power = int(calculated_power * (power_multiplier_crit_success))
+        else:
+            status = UseStatus.SPELL_SUCCESS
+            calculated_power = int(calculated_power * (power_multiplier_success))
+        
 
-    if spell_affinity == SpellAfinity.HEAL and status != UseStatus.SPELL_FAIL and status != UseStatus.SPELL_CRIT_FAIL:
-        var calculated_power := spell_power
-        if status == UseStatus.SPELL_CRIT_SUCCESS:
-            calculated_power *= 2
-        elif status == UseStatus.SPELL_SUCCESS:
-            calculated_power = int(calculated_power * 1.5)
-        print(item_name + " Spell Healed " + str(calculated_power) + " HP!")
-
+    if spell_affinity == SpellAfinity.HEAL:
+        _handle_healing(calculated_power)
+        
     elif status == UseStatus.SPELL_FAIL:
         print(item_name + " Spell Failed!")
 
+
     return status
 
-func _on_roll_crit_fail() -> void:
-    print("Roll Crit Fail!")
-func _on_roll_crit_succcess() -> void:
-    print("Roll Crit!")
-func _on_roll_fail() -> void:
-    print("Roll Fail!")
-func _on_roll_success() -> void:
-    print("Roll Success!")
+func _handle_healing(heal_power: float) -> void:
+    print(item_name + " Spell Healed " + str(heal_power) + " HP!")
