@@ -8,6 +8,8 @@ var inventory_button := preload("res://Assets/UIElements/InventoryItemButton.tsc
 # Debug items
 var test_item := preload("res://Scripts/Inventory/Resources/new_item.tres") as BaseInventoryItem
 var test_item2 := preload("res://Scripts/Inventory/Resources/new_item2.tres") as BaseInventoryItem
+var test_spell := preload("res://Scripts/Inventory/Resources/Spells/test_healing_spell.tres") as SpellItem
+
 
 # Map item id to button
 var item_button_map: Dictionary = {}
@@ -44,6 +46,7 @@ func _ready() -> void:
     item_inventory.connect("inventory_updated", update_inventory)
 
     # Add some test items
+    item_inventory.add_item(test_spell, 15)
     item_inventory.add_item(test_item, 10)
     item_inventory.add_item(test_item2, 10)
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c38bslijvehw2"
-path="res://.godot/imported/wind_element_alt3.png-1319727921501fdb41f9c23e8b3757ef.ctex"
+uid="uid://cugu8fonlpisl"
+path="res://.godot/imported/phys_element.png-11a58e82f61f9a0ff09c847a4e9369ed.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Icons/elements/wind_element_alt3.png"
-dest_files=["res://.godot/imported/wind_element_alt3.png-1319727921501fdb41f9c23e8b3757ef.ctex"]
+source_file="res://Assets/Icons/elements/phys_element.png"
+dest_files=["res://.godot/imported/phys_element.png-11a58e82f61f9a0ff09c847a4e9369ed.ctex"]
 
 [params]
 

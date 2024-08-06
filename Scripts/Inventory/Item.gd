@@ -11,6 +11,10 @@ enum ItemType {
     MISC
 }
 enum UseStatus {
+    SPELL_FAIL,
+    SPELL_SUCCESS,
+    SPELL_CRIT_FAIL,
+    SPELL_CRIT_SUCCESS,
     CONSUMED_HP,
     CONSUMED_MP,
     CANNOT_USE,

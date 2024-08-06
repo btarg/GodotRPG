@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmkxchebirwq7"
-path="res://.godot/imported/bless_element_alt3.png-3c707060d0c96c82a4e9b2fa3315e20b.ctex"
+uid="uid://drvhx8hqfsd6x"
+path="res://.godot/imported/ice_element.png-38afb68ef94b9d049c0b53062f5f6ba9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Icons/elements/bless_element_alt3.png"
-dest_files=["res://.godot/imported/bless_element_alt3.png-3c707060d0c96c82a4e9b2fa3315e20b.ctex"]
+source_file="res://Assets/Icons/elements/ice_element.png"
+dest_files=["res://.godot/imported/ice_element.png-38afb68ef94b9d049c0b53062f5f6ba9.ctex"]
 
 [params]
 

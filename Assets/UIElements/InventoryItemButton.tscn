@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bf0dm6d1emcev"]
 
 [ext_resource type="Theme" uid="uid://icpcatdn87hq" path="res://Assets/Themes/theme.tres" id="1_tqhf1"]
-[ext_resource type="Texture2D" uid="uid://dqknocffw2aen" path="res://Assets/Icons/fire_element_alt2.png" id="2_4qe8h"]
+[ext_resource type="Texture2D" uid="uid://dqknocffw2aen" path="res://Assets/Icons/elements/fire_element.png" id="2_8x6pw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d1ssq"]
 bg_color = Color(0.0923971, 0.0923971, 0.092397, 1)
@@ -20,7 +20,7 @@ offset_bottom = 41.0
 theme = ExtResource("1_tqhf1")
 theme_override_font_sizes/font_size = 32
 text = "AAAAAAAAAAAAAAA"
-icon = ExtResource("2_4qe8h")
+icon = ExtResource("2_8x6pw")
 alignment = 0
 expand_icon = true
 
