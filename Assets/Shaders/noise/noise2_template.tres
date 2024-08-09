@@ -1,0 +1,16 @@
+[gd_resource type="NoiseTexture2D" load_steps=2 format=3 uid="uid://bvkqv6dlnfuca"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gtbkg"]
+noise_type = 2
+seed = 50
+frequency = 0.0105
+fractal_type = 3
+fractal_lacunarity = 2.82
+fractal_gain = 1.06
+fractal_weighted_strength = 0.22
+domain_warp_enabled = true
+domain_warp_type = 2
+
+[resource]
+seamless = true
+noise = SubResource("FastNoiseLite_gtbkg")

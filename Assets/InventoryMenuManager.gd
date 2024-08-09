@@ -22,7 +22,12 @@ var empty_string := "- NO ITEMS IN INVENTORY -"
 @onready var item_description := %ItemDescription as Label
 @onready var inventory_elements := %InventoryElements as VBoxContainer
 
-@onready var background_panel := %InventoryBackground as PanelContainer
+@onready var mode_select_background := $ModeSelectBackground as Panel
+@onready var mode_select_stylebox := mode_select_background.get("theme_override_styles/panel") as StyleBoxFlat
+
+@onready var background_paint := $InventoryBackgroundPaint as TextureRect
+@onready var background_paint2 := $InventoryBackgroundPaint2 as TextureRect
+
 @onready var tween := create_tween()
 
 # Cache sounds
@@ -37,9 +42,12 @@ func _ready() -> void:
     select_panel.visible = false
     select_panel_shadow.visible = false
 
-    background_panel.material.set("shader_parameter/percentage", 0.0)
-    # lerp the percentage of the shader to 1.0 (tween)
-    tween.tween_property(background_panel.material, "shader_parameter/percentage", 1.0, 0.5)
+    background_paint.material.set("shader_parameter/progress", 0.0)
+    background_paint2.material.set("shader_parameter/progress", 0.0)
+
+    # lerp the percentage of the shader to full
+    tween.tween_property(background_paint.material, "shader_parameter/progress", 1.0, 0.45)
+    tween.tween_property(background_paint2.material, "shader_parameter/progress", 1.0, 0.25)
 
     # Connect to the item_inventory updated signal
     item_inventory.connect("inventory_updated", update_inventory)
@@ -50,8 +58,10 @@ func _ready() -> void:
     item_inventory.add_item(test_item2, 10)
 
 func _physics_process(_delta) -> void:
+    mode_select_stylebox.skew = mode_select_stylebox.skew.lerp(Vector2(0.45, 0), 0.1)
+
     if selected_button:
-        var selected_y := roundf(selected_button.global_position.y)
+        var selected_y := roundf(selected_button.global_position.y) - 2
         var panel_y := roundf(select_panel.global_position.y)
 
         # lerp the select_panel color back to white for when we change colour on select
@@ -67,7 +77,7 @@ func _physics_process(_delta) -> void:
         else:
             is_moving = true
             
-            var target_y: float = selected_y - panel_y
+            var target_y: float = (selected_y - panel_y)
             # Move the select select_panel towards the selected button
             select_panel.global_position.y += target_y * 0.25
             # calculate the shadow's target position with the offset

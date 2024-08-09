@@ -1,16 +1,47 @@
-[gd_scene load_steps=2 format=3 uid="uid://ctpnpjjlp65b5"]
+[gd_scene load_steps=8 format=3 uid="uid://ctpnpjjlp65b5"]
 
-[ext_resource type="Texture2D" uid="uid://dffvhiww0lh1c" path="res://icon.svg" id="2_rlvru"]
+[ext_resource type="Shader" path="res://Assets/Shaders/paintbrush_wipe.gdshader" id="1_vtsuc"]
+[ext_resource type="Texture2D" uid="uid://kv6kaw4avsje" path="res://Assets/Shaders/noise/noise1_template.tres" id="2_q24bt"]
+[ext_resource type="Texture2D" uid="uid://bvkqv6dlnfuca" path="res://Assets/Shaders/noise/noise2_template.tres" id="3_i37sm"]
+[ext_resource type="Texture2D" uid="uid://dy7cknaaqn1kb" path="res://Assets/Shaders/Texturelabs_InkPaint_402M.png" id="4_dq8dw"]
+
+[sub_resource type="Gradient" id="Gradient_8qcgm"]
+colors = PackedColorArray(0.980392, 0.211765, 0.666667, 1, 1, 1, 0.486275, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d13so"]
+gradient = SubResource("Gradient_8qcgm")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2kjdc"]
+shader = ExtResource("1_vtsuc")
+shader_parameter/progress = 0.553
+shader_parameter/horizontal = true
+shader_parameter/luminance_based_colouring = true
+shader_parameter/invert_luminance = true
+shader_parameter/target_color = Color(0.981647, 0.211594, 0.666247, 1)
+shader_parameter/desired_alpha = 1.0
+shader_parameter/gradient_enabled = true
+shader_parameter/flip_wipe_direction = false
+shader_parameter/noise1 = ExtResource("2_q24bt")
+shader_parameter/noise2 = ExtResource("3_i37sm")
+shader_parameter/gradient_texture = SubResource("GradientTexture2D_d13so")
 
 [node name="Control" type="Control"]
+material = SubResource("ShaderMaterial_2kjdc")
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 64.0
+offset_right = 48.0
+offset_bottom = 64.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(326, 206)
-scale = Vector2(2.65625, 2.65625)
-texture = ExtResource("2_rlvru")
+[node name="TexturelabsInkPaint402m" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_2kjdc")
+position = Vector2(600, 312)
+scale = Vector2(0.65989, 0.749264)
+texture = ExtResource("4_dq8dw")
