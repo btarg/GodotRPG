@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://d6mx5duvxyyx"]
+
+[node name="button" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 308.0
+offset_top = 201.0
+offset_right = 316.0
+offset_bottom = 209.0
+scale = Vector2(2, 2)
+
+[node name="shadow" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -73.5
+offset_top = -9.0
+offset_right = 75.5
+offset_bottom = 13.0
+mouse_filter = 1
+color = Color(0, 0, 0, 0.192157)
+
+[node name="black" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -74.5
+offset_top = -10.0
+offset_right = 74.5
+offset_bottom = 12.0
+mouse_filter = 1
+
+[node name="white" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -72.5
+offset_top = -8.0
+offset_right = 72.5
+offset_bottom = 10.0
+mouse_filter = 1
+
+[node name="pink" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -71.5
+offset_top = -7.0
+offset_right = 71.5
+offset_bottom = 9.0
+mouse_filter = 1

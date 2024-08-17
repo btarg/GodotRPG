@@ -7,10 +7,10 @@ vec4 polygon(vec2 uv, float width, int sides)
 
     float angle = atan(uv.x, uv.y);
     float radius = TWO_PI / float(sides);
-    
+
     float dist = cos(floor(0.5 + angle / radius) * radius - angle) * length(uv);
     float poly = step(width, dist);
-    
+
     return poly > 0.0 ? vec4(0.0) : vec4(1.0);
 }
 

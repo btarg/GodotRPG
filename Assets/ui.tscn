@@ -1,24 +1,36 @@
-[gd_scene load_steps=23 format=3 uid="uid://bbpr3f42wv3f4"]
+[gd_scene load_steps=29 format=3 uid="uid://bbpr3f42wv3f4"]
 
 [ext_resource type="Theme" uid="uid://icpcatdn87hq" path="res://Assets/Themes/theme.tres" id="1_2x5wo"]
 [ext_resource type="Script" path="res://Assets/InventoryMenuManager.gd" id="1_jin5a"]
 [ext_resource type="Script" path="res://Scripts/Inventory/InventoryManager.gd" id="1_vihhl"]
+[ext_resource type="Shader" path="res://Assets/Shaders/halftone.gdshader" id="3_0yrly"]
 [ext_resource type="Shader" path="res://Assets/Shaders/paintbrush_wipe.gdshader" id="3_v8qdp"]
 [ext_resource type="Texture2D" uid="uid://dy7cknaaqn1kb" path="res://Assets/Shaders/Texturelabs_InkPaint_402M.png" id="3_wvxl4"]
 [ext_resource type="Texture2D" uid="uid://kv6kaw4avsje" path="res://Assets/Shaders/noise/noise1_template.tres" id="4_uhky1"]
 [ext_resource type="Texture2D" uid="uid://bvkqv6dlnfuca" path="res://Assets/Shaders/noise/noise2_template.tres" id="5_joy1i"]
 [ext_resource type="Texture2D" uid="uid://dco1iuwhb6w86" path="res://Assets/Shaders/Texturelabs_InkPaint_384M.png" id="6_cguuw"]
 [ext_resource type="FontFile" uid="uid://kpfebmk4gx8d" path="res://Assets/Fonts/Expose-Regular.otf" id="8_6w75r"]
+[ext_resource type="Shader" path="res://Assets/Shaders/luminance_colour.gdshader" id="8_e1llg"]
 [ext_resource type="AudioStream" uid="uid://cykbduoubldex" path="res://Assets/Sounds/softclick.ogg" id="8_f5eor"]
 [ext_resource type="LabelSettings" uid="uid://v0m6ms4lq5wv" path="res://Assets/Themes/info_label_settings.tres" id="8_u0fe3"]
 [ext_resource type="AudioStream" uid="uid://blleegjqv1fky" path="res://Assets/Sounds/denied.wav" id="9_rp5ee"]
 [ext_resource type="AudioStream" uid="uid://eqtm4k61d0bg" path="res://Assets/Sounds/heal.wav" id="10_4dulq"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ydm2l"]
-bg_color = Color(0.133333, 0.133333, 0.133333, 1)
-shadow_color = Color(4.04298e-06, 0.985674, 0.925229, 1)
-shadow_size = 1
-shadow_offset = Vector2(8, 8)
+[sub_resource type="Gradient" id="Gradient_d8txa"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6cfnw"]
+gradient = SubResource("Gradient_d8txa")
+fill = 1
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0.55, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uk8eg"]
+shader = ExtResource("3_0yrly")
+shader_parameter/size = 64
+shader_parameter/dot_size = 1.25
+shader_parameter/value_multiplier = 2.0
+shader_parameter/invert = false
+shader_parameter/gradient_texture = SubResource("GradientTexture2D_6cfnw")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_napwb"]
 shader = ExtResource("3_v8qdp")
@@ -46,6 +58,12 @@ shader_parameter/flip_wipe_direction = false
 shader_parameter/noise1 = ExtResource("4_uhky1")
 shader_parameter/noise2 = ExtResource("5_joy1i")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aqb8l"]
+shader = ExtResource("8_e1llg")
+shader_parameter/target_color = Color(0.223529, 1, 1, 1)
+shader_parameter/invert_luminance = true
+shader_parameter/gradient_enabled = false
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_suspb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vybim"]
@@ -55,7 +73,12 @@ shader_parameter/noise2 = ExtResource("5_joy1i")
 [sub_resource type="LabelSettings" id="LabelSettings_lhktw"]
 font = ExtResource("8_6w75r")
 font_size = 84
-font_color = Color(0.984314, 0.901961, 0.337255, 1)
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3wvcj"]
+font = ExtResource("8_6w75r")
+font_size = 84
+font_color = Color(0.988235, 0.92549, 0.317647, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4ftp"]
 content_margin_top = 2.0
@@ -92,13 +115,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jin5a")
 
-[node name="ModeSelectBackground" type="Panel" parent="InventoryUI"]
-layout_mode = 0
-offset_left = 120.0
-offset_top = 40.0
-offset_right = 352.0
-offset_bottom = 128.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_ydm2l")
+[node name="ColorRect" type="ColorRect" parent="InventoryUI"]
+material = SubResource("ShaderMaterial_uk8eg")
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -398.0
+offset_right = 416.0
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
 
 [node name="InventoryBackgroundPaint" type="TextureRect" parent="InventoryUI"]
 z_index = -2
@@ -117,12 +143,23 @@ flip_h = true
 z_index = -2
 material = SubResource("ShaderMaterial_6tso5")
 layout_mode = 2
-offset_left = -128.0
-offset_top = -808.0
-offset_right = 1858.0
-offset_bottom = 517.0
-rotation = 0.800958
+offset_left = -89.0
+offset_top = -819.0
+offset_right = 1876.0
+offset_bottom = 462.0
+rotation = 0.860883
 texture = ExtResource("6_cguuw")
+
+[node name="ModeSelectBackground" type="TextureRect" parent="InventoryUI"]
+material = SubResource("ShaderMaterial_aqb8l")
+layout_mode = 2
+offset_left = 80.0
+offset_top = 32.0
+offset_right = 366.0
+offset_bottom = 170.0
+rotation = -0.0763745
+texture = ExtResource("6_cguuw")
+expand_mode = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="InventoryUI"]
 layout_mode = 1
@@ -164,17 +201,17 @@ layout_mode = 2
 theme_override_constants/separation = 64
 alignment = 1
 
-[node name="Label2" type="Label" parent="InventoryUI/PanelContainer/MarginContainer/InventoryPanelContainer/MarginContainer/VBoxContainer2/TitlePanelContainer/HBoxContainer"]
+[node name="StockLabel" type="Label" parent="InventoryUI/PanelContainer/MarginContainer/InventoryPanelContainer/MarginContainer/VBoxContainer2/TitlePanelContainer/HBoxContainer"]
 layout_mode = 2
 text = "STOCK"
 label_settings = SubResource("LabelSettings_lhktw")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label3" type="Label" parent="InventoryUI/PanelContainer/MarginContainer/InventoryPanelContainer/MarginContainer/VBoxContainer2/TitlePanelContainer/HBoxContainer"]
+[node name="SpecialLabel" type="Label" parent="InventoryUI/PanelContainer/MarginContainer/InventoryPanelContainer/MarginContainer/VBoxContainer2/TitlePanelContainer/HBoxContainer"]
 layout_mode = 2
 text = "SPECIAL"
-label_settings = SubResource("LabelSettings_lhktw")
+label_settings = SubResource("LabelSettings_3wvcj")
 horizontal_alignment = 1
 vertical_alignment = 1
 

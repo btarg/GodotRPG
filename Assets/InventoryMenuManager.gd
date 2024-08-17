@@ -23,8 +23,6 @@ var empty_string := "- NO ITEMS IN INVENTORY -"
 @onready var inventory_elements := %InventoryElements as VBoxContainer
 
 @onready var mode_select_background := $ModeSelectBackground as Panel
-@onready var mode_select_stylebox := mode_select_background.get("theme_override_styles/panel") as StyleBoxFlat
-
 @onready var background_paint := $InventoryBackgroundPaint as TextureRect
 @onready var background_paint2 := $InventoryBackgroundPaint2 as TextureRect
 
@@ -58,8 +56,6 @@ func _ready() -> void:
     item_inventory.add_item(test_item2, 10)
 
 func _physics_process(_delta) -> void:
-    mode_select_stylebox.skew = mode_select_stylebox.skew.lerp(Vector2(0.45, 0), 0.1)
-
     if selected_button:
         var selected_y := roundf(selected_button.global_position.y) - 2
         var panel_y := roundf(select_panel.global_position.y)
