@@ -1,9 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://b2el42p2xjkg"]
+[gd_scene load_steps=21 format=3 uid="uid://b2el42p2xjkg"]
 
 [ext_resource type="Theme" uid="uid://icpcatdn87hq" path="res://Assets/Themes/theme.tres" id="1_2x5wo"]
 [ext_resource type="Script" path="res://Assets/InventoryMenuManager.gd" id="1_jin5a"]
 [ext_resource type="Script" path="res://Scripts/Inventory/InventoryManager.gd" id="1_vihhl"]
-[ext_resource type="FontFile" uid="uid://cyirsy6dpmomc" path="res://Assets/Fonts/BebasNeue-Regular.ttf" id="1_wunqk"]
 [ext_resource type="FontFile" uid="uid://cq5dmd56sdm2c" path="res://Assets/Fonts/Impact/impact.ttf" id="2_gu8wa"]
 [ext_resource type="Shader" path="res://Assets/Shaders/wipe.gdshader" id="3_qs4e0"]
 [ext_resource type="AudioStream" uid="uid://cykbduoubldex" path="res://Assets/Sounds/softclick.ogg" id="8_f5eor"]
@@ -145,7 +144,6 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="InventoryUI/PanelContainer/MarginContainer/InventoryBackground/MarginContainer/VBoxContainer2/TitlePanelContainer/Title"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_wunqk")
 text = "stock"
 label_settings = SubResource("LabelSettings_k5v2p")
 horizontal_alignment = 1
@@ -162,7 +160,6 @@ stretch_mode = 3
 [node name="Label2" type="Label" parent="InventoryUI/PanelContainer/MarginContainer/InventoryBackground/MarginContainer/VBoxContainer2/TitlePanelContainer/Title"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.310617, 0.310617, 0.310617, 1)
-theme_override_fonts/font = ExtResource("1_wunqk")
 text = "special"
 label_settings = SubResource("LabelSettings_k5v2p")
 horizontal_alignment = 1

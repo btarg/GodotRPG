@@ -1,0 +1,122 @@
+[gd_scene load_steps=17 format=3 uid="uid://dcks6gn4ttkk5"]
+
+[ext_resource type="Script" path="res://new_ui.gd" id="1_j7u3w"]
+[ext_resource type="Texture2D" uid="uid://bkkqjk3j1xy67" path="res://Assets/GrungeUI-4k.png" id="1_juipf"]
+[ext_resource type="Texture2D" uid="uid://b8shlq8bf0pm3" path="res://Assets/UIElements/inventory-01-stock.png" id="2_jbcfa"]
+[ext_resource type="Texture2D" uid="uid://j767cph5day0" path="res://Assets/UIElements/01stock.svg" id="3_3psld"]
+[ext_resource type="Texture2D" uid="uid://c1tmwbfuv3s5p" path="res://Assets/UIElements/01stock-side.svg" id="4_rjyft"]
+[ext_resource type="Texture2D" uid="uid://d4bhx3jdy1gpl" path="res://Assets/UIElements/exclamation.png" id="4_uqhvh"]
+[ext_resource type="Texture2D" uid="uid://gj4mvkg3j3tr" path="res://Assets/UIElements/inventory-02-item.png" id="4_vy42x"]
+[ext_resource type="Texture2D" uid="uid://b42gkkp7okrp1" path="res://Assets/UIElements/02item.svg" id="5_iqa1c"]
+[ext_resource type="FontFile" uid="uid://cq5dmd56sdm2c" path="res://Assets/Fonts/Impact/impact.ttf" id="6_bv1ib"]
+[ext_resource type="Texture2D" uid="uid://d1gw07u5h2jks" path="res://Assets/UIElements/02item-side.svg" id="7_wth4j"]
+[ext_resource type="FontFile" uid="uid://deqhcndqvcsg5" path="res://Assets/Fonts/Arsenal/Arsenal-Italic.ttf" id="8_hufom"]
+
+[sub_resource type="FontVariation" id="FontVariation_fenjn"]
+base_font = ExtResource("6_bv1ib")
+variation_transform = Transform2D(1, 0.16, 0, 0.9, 0, 0)
+spacing_glyph = -3
+
+[sub_resource type="LabelSettings" id="LabelSettings_nugb7"]
+font = SubResource("FontVariation_fenjn")
+font_size = 72
+font_color = Color(0.2, 0.8, 1, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_yx6i0"]
+base_font = ExtResource("8_hufom")
+variation_transform = Transform2D(1, 0, 0, 0.9, 0, 0)
+spacing_glyph = -2
+spacing_space = -4
+
+[sub_resource type="LabelSettings" id="LabelSettings_hexij"]
+line_spacing = -10.0
+font = SubResource("FontVariation_yx6i0")
+font_size = 64
+font_color = Color(0.831373, 0.811765, 0.745098, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_s57a0"]
+line_spacing = -10.0
+font = SubResource("FontVariation_yx6i0")
+font_size = 64
+font_color = Color(0.2, 0.8, 1, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j7u3w")
+
+[node name="GrungeUi-4k" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(576, 324)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_juipf")
+
+[node name="Inventory-01-stock" type="Sprite2D" parent="."]
+position = Vector2(900, 324)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_jbcfa")
+
+[node name="01Stock" type="Sprite2D" parent="Inventory-01-stock"]
+position = Vector2(-426.667, -696.667)
+texture = ExtResource("3_3psld")
+
+[node name="01Stock-side" type="Sprite2D" parent="Inventory-01-stock"]
+position = Vector2(733.333, 13.3334)
+texture = ExtResource("4_rjyft")
+
+[node name="Inventory-02-item" type="Sprite2D" parent="."]
+position = Vector2(915, 324)
+scale = Vector2(0.299803, 0.3)
+texture = ExtResource("4_vy42x")
+
+[node name="02Item" type="Sprite2D" parent="Inventory-02-item"]
+position = Vector2(-476.98, -696.667)
+scale = Vector2(1.00066, 1)
+texture = ExtResource("5_iqa1c")
+
+[node name="02Item-side" type="Sprite2D" parent="Inventory-02-item"]
+position = Vector2(683.783, 13.3333)
+scale = Vector2(1.00066, 1)
+texture = ExtResource("7_wth4j")
+
+[node name="InfoBox" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 64.0
+offset_right = 104.0
+offset_bottom = 40.0
+
+[node name="InfoHeader" type="Label" parent="InfoBox"]
+offset_left = 709.0
+offset_top = 396.0
+offset_right = 837.0
+offset_bottom = 485.0
+scale = Vector2(0.33, 0.33)
+text = "INFO"
+label_settings = SubResource("LabelSettings_nugb7")
+
+[node name="Exclamation" type="Sprite2D" parent="InfoBox"]
+position = Vector2(678, 440)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_uqhvh")
+
+[node name="InfoDescription" type="Label" parent="InfoBox"]
+offset_left = 706.0
+offset_top = 424.0
+offset_right = 1658.0
+offset_bottom = 589.0
+scale = Vector2(0.33, 0.33)
+text = "Heals a moderate amount of HP for a
+single target."
+label_settings = SubResource("LabelSettings_hexij")
+
+[node name="InfoDC" type="Label" parent="InfoBox/InfoDescription"]
+offset_left = -8.96454e-05
+offset_top = 160.606
+offset_right = 952.0
+offset_bottom = 325.606
+text = "Difficulty class: 5"
+label_settings = SubResource("LabelSettings_s57a0")

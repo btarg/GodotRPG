@@ -1,10 +1,13 @@
-[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://v0m6ms4lq5wv"]
+[gd_resource type="LabelSettings" load_steps=3 format=3 uid="uid://v0m6ms4lq5wv"]
 
-[ext_resource type="FontFile" uid="uid://deqhcndqvcsg5" path="res://Assets/Fonts/Arsenal/Arsenal-Italic.ttf" id="1_b656t"]
+[ext_resource type="FontFile" uid="uid://cq5dmd56sdm2c" path="res://Assets/Fonts/Impact/impact.ttf" id="1_hd6si"]
+
+[sub_resource type="FontVariation" id="FontVariation_fenjn"]
+base_font = ExtResource("1_hd6si")
+variation_transform = Transform2D(1, 0.16, 0, 0.9, 0, 0)
+spacing_glyph = -3
 
 [resource]
-font = ExtResource("1_b656t")
-font_size = 32
-font_color = Color(0, 1, 0.811765, 1)
-shadow_color = Color(0, 0, 0, 1)
-shadow_offset = Vector2(2, 2)
+font = SubResource("FontVariation_fenjn")
+font_size = 72
+font_color = Color(0.2, 0.8, 1, 1)
