@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://d0mpnw21ahmc2"]
+[gd_scene load_steps=5 format=3 uid="uid://d0mpnw21ahmc2"]
 
 [ext_resource type="Script" path="res://Scripts/heart_container.gd" id="1_nh4ph"]
 [ext_resource type="StyleBox" uid="uid://bg1k1ex33uahm" path="res://Assets/Themes/heart/pixel_red.tres" id="2_yp3ie"]
+[ext_resource type="Script" path="res://Scripts/heart_no_grid.gd" id="4_e1p3v"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ixdj2"]
 
@@ -13,115 +14,132 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HeartContainer" type="VBoxContainer" parent="."]
+[node name="HeartContainerGrid" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 64.0
 offset_top = 64.0
 offset_right = 400.0
 offset_bottom = 400.0
+alignment = 1
 script = ExtResource("1_nh4ph")
 
-[node name="1" type="HBoxContainer" parent="HeartContainer"]
+[node name="1" type="HBoxContainer" parent="HeartContainerGrid"]
 layout_mode = 2
 alignment = 1
 
-[node name="1" type="Panel" parent="HeartContainer/1" groups=["HeartSegment"]]
+[node name="1" type="Panel" parent="HeartContainerGrid/1" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="Space" type="Panel" parent="HeartContainer/1"]
+[node name="Space" type="Panel" parent="HeartContainerGrid/1"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ixdj2")
 
-[node name="2" type="Panel" parent="HeartContainer/1" groups=["HeartSegment"]]
+[node name="2" type="Panel" parent="HeartContainerGrid/1" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="2" type="HBoxContainer" parent="HeartContainer"]
+[node name="2" type="HBoxContainer" parent="HeartContainerGrid"]
 layout_mode = 2
 alignment = 1
 
-[node name="3" type="Panel" parent="HeartContainer/2" groups=["HeartSegment"]]
+[node name="3" type="Panel" parent="HeartContainerGrid/2" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="4" type="Panel" parent="HeartContainer/2" groups=["HeartSegment"]]
+[node name="4" type="Panel" parent="HeartContainerGrid/2" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="5" type="Panel" parent="HeartContainer/2" groups=["HeartSegment"]]
+[node name="5" type="Panel" parent="HeartContainerGrid/2" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="6" type="Panel" parent="HeartContainer/2" groups=["HeartSegment"]]
+[node name="6" type="Panel" parent="HeartContainerGrid/2" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="7" type="Panel" parent="HeartContainer/2" groups=["HeartSegment"]]
+[node name="7" type="Panel" parent="HeartContainerGrid/2" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="3" type="HBoxContainer" parent="HeartContainer"]
+[node name="3" type="HBoxContainer" parent="HeartContainerGrid"]
 layout_mode = 2
 alignment = 1
 
-[node name="8" type="Panel" parent="HeartContainer/3" groups=["HeartSegment"]]
+[node name="8" type="Panel" parent="HeartContainerGrid/3" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="9" type="Panel" parent="HeartContainer/3" groups=["HeartSegment"]]
+[node name="9" type="Panel" parent="HeartContainerGrid/3" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="10" type="Panel" parent="HeartContainer/3" groups=["HeartSegment"]]
+[node name="10" type="Panel" parent="HeartContainerGrid/3" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="11" type="Panel" parent="HeartContainer/3" groups=["HeartSegment"]]
+[node name="11" type="Panel" parent="HeartContainerGrid/3" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="12" type="Panel" parent="HeartContainer/3" groups=["HeartSegment"]]
+[node name="12" type="Panel" parent="HeartContainerGrid/3" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="4" type="HBoxContainer" parent="HeartContainer"]
+[node name="4" type="HBoxContainer" parent="HeartContainerGrid"]
 layout_mode = 2
 alignment = 1
 
-[node name="13" type="Panel" parent="HeartContainer/4" groups=["HeartSegment"]]
+[node name="13" type="Panel" parent="HeartContainerGrid/4" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="14" type="Panel" parent="HeartContainer/4" groups=["HeartSegment"]]
+[node name="14" type="Panel" parent="HeartContainerGrid/4" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="15" type="Panel" parent="HeartContainer/4" groups=["HeartSegment"]]
+[node name="15" type="Panel" parent="HeartContainerGrid/4" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
 
-[node name="5" type="HBoxContainer" parent="HeartContainer"]
+[node name="5" type="HBoxContainer" parent="HeartContainerGrid"]
 layout_mode = 2
 alignment = 1
 
-[node name="16" type="Panel" parent="HeartContainer/5" groups=["HeartSegment"]]
+[node name="16" type="Panel" parent="HeartContainerGrid/5" groups=["HeartSegment"]]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("2_yp3ie")
+
+[node name="HeartNoGrid" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = -536.0
+offset_bottom = -284.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_e1p3v")
