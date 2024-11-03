@@ -67,10 +67,12 @@ func cleanup() -> void:
         p.queue_free()
     for t in pixel_position_targets.values():
         t.queue_free()
+    for tw in tweens.values():
+        tw.kill()
 
     spawned_heart_pixels.clear()
     pixel_position_targets.clear()
-    
+    tweens.clear()
 
 func move_to_position(destination: Vector2) -> void:
     set_global_position(destination)
