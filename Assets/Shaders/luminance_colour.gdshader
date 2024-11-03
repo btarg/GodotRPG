@@ -13,7 +13,7 @@ void fragment() {
     }
     // Apply gradient instead of solid colour
     if (gradient_enabled) {
-        vec4 gradient_color = texture(gradient_texture, UV);
+        vec4 gradient_color = texture(gradient_texture, SCREEN_UV);
         COLOR.rgb = mix(COLOR.rgb, gradient_color.rgb, luminance);
     } else {
         COLOR.rgb = target_color.rgb * luminance;

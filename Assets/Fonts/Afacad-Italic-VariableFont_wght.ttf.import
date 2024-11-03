@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cq5dmd56sdm2c"
-path="res://.godot/imported/impact.ttf-62a0d571a233ca3cc8f313e45b144c80.fontdata"
+uid="uid://djif60fdsqhgr"
+path="res://.godot/imported/Afacad-Italic-VariableFont_wght.ttf-050889d09f361ef0ae5647660abe86b0.fontdata"
 
 [deps]
 
-source_file="res://Assets/Fonts/Impact/impact.ttf"
-dest_files=["res://.godot/imported/impact.ttf-62a0d571a233ca3cc8f313e45b144c80.fontdata"]
+source_file="res://Assets/Fonts/Afacad-Italic-VariableFont_wght.ttf"
+dest_files=["res://.godot/imported/Afacad-Italic-VariableFont_wght.ttf-050889d09f361ef0ae5647660abe86b0.fontdata"]
 
 [params]
 

@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/unicode.impact.ttf-80e7bdba75533c1ace9ddbe0db
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48
