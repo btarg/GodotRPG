@@ -64,12 +64,12 @@ func _ready() -> void:
 
             # add a target node as a child of this object
             var target := Control.new()
+            target.name = "Target" + str(row_num) + str(pixel_index)
             add_child(target)
             target.set_position(target_pos)
 
             # add the heart_pixel to the root
             get_tree().root.add_child.call_deferred(pixel_instance)
-            pixel_instance.name = "HeartPixel" + str(pixel_index)
 
             # spawn randomly around the edge of the screen
             pixel_instance.set_position(get_random_position_out_of_bounds())
@@ -84,6 +84,10 @@ func cleanup() -> void:
     for p in spawned_heart_pixels:
         p.queue_free()
     spawned_heart_pixels.clear()
+
+    # kill children
+    for child in get_children():
+        child.queue_free()
 
 func set_health(value: int) -> void:
     var difference: int = abs(health - value)

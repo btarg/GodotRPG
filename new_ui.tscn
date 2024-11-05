@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dcks6gn4ttkk5"]
+[gd_scene load_steps=23 format=3 uid="uid://dcks6gn4ttkk5"]
 
 [ext_resource type="Script" path="res://new_ui.gd" id="1_j7u3w"]
 [ext_resource type="Texture2D" uid="uid://bkkqjk3j1xy67" path="res://Assets/GrungeUI-4k.png" id="1_juipf"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://d1gw07u5h2jks" path="res://Assets/UIElements/02item-side.svg" id="7_wth4j"]
 [ext_resource type="FontFile" uid="uid://deqhcndqvcsg5" path="res://Assets/Fonts/Arsenal/Arsenal-Italic.ttf" id="8_hufom"]
 [ext_resource type="FontFile" uid="uid://csv28qlfj5i22" path="res://Assets/Fonts/Afacad-VariableFont_wght.ttf" id="13_o250o"]
+[ext_resource type="PackedScene" uid="uid://cm4jd3mpblde0" path="res://Assets/UIElements/heart_no_grid.tscn" id="13_uwlsf"]
 
 [sub_resource type="FontVariation" id="FontVariation_fenjn"]
 base_font = ExtResource("6_bv1ib")
@@ -171,3 +172,6 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_08rml")
 expand_mode = 1
+
+[node name="HeartNoGrid" parent="." instance=ExtResource("13_uwlsf")]
+layout_mode = 1
