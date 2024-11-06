@@ -77,6 +77,7 @@ func _ready() -> void:
 
             # Set target
             pixel_instance.pixel_target = target
+            # pixel_instance.update_track_position(Vector2.ZERO)
 
     _update_segments_fill()
 

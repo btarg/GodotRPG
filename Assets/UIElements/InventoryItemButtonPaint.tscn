@@ -1,0 +1,103 @@
+[gd_scene load_steps=10 format=3 uid="uid://da3mueut4kujj"]
+
+[ext_resource type="Texture2D" uid="uid://cx2jdlx2rnduf" path="res://Assets/UIElements/paint.png" id="1_xo5lv"]
+[ext_resource type="FontFile" uid="uid://g7802j74catg" path="res://Assets/Fonts/Arsenal/Arsenal-BoldItalic.ttf" id="2_hy4mq"]
+[ext_resource type="Texture2D" uid="uid://dnetbcnu43gth" path="res://Assets/Icons/elements/heal_element.png" id="3_s1jkr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_mjkk5"]
+font = ExtResource("2_hy4mq")
+font_size = 100
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6cl4g"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 1024
+corner_radius_top_right = 1024
+corner_radius_bottom_right = 1024
+corner_radius_bottom_left = 1024
+
+[sub_resource type="FontVariation" id="FontVariation_uqxs6"]
+base_font = ExtResource("2_hy4mq")
+variation_embolden = 0.1
+variation_transform = Transform2D(1, 0.085, 0, 1, 0, 0)
+spacing_top = -10
+
+[sub_resource type="LabelSettings" id="LabelSettings_x5aap"]
+font = SubResource("FontVariation_uqxs6")
+font_size = 77
+
+[sub_resource type="FontVariation" id="FontVariation_km7ov"]
+base_font = ExtResource("2_hy4mq")
+
+[sub_resource type="LabelSettings" id="LabelSettings_l1tgf"]
+font = SubResource("FontVariation_km7ov")
+font_size = 77
+
+[node name="InventoryButton" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 128.0
+offset_bottom = -472.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Paint" type="Sprite2D" parent="."]
+position = Vector2(640, 85)
+texture = ExtResource("1_xo5lv")
+
+[node name="Label" type="Label" parent="Paint"]
+offset_left = -384.0
+offset_top = -69.0
+offset_right = -151.0
+offset_bottom = 83.0
+text = "Cure"
+label_settings = SubResource("LabelSettings_mjkk5")
+
+[node name="CountBG" type="Panel" parent="Paint"]
+offset_left = 256.0
+offset_top = -45.0
+offset_right = 540.0
+offset_bottom = 39.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6cl4g")
+
+[node name="Label" type="Label" parent="Paint/CountBG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = -50.0
+offset_right = 64.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "069"
+label_settings = SubResource("LabelSettings_x5aap")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Paint/CountBG"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = -59.0
+offset_right = 56.0
+offset_bottom = 38.0
+grow_vertical = 2
+text = "x"
+label_settings = SubResource("LabelSettings_l1tgf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemIcon" type="Sprite2D" parent="Paint"]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(-468, 3)
+scale = Vector2(8.5, 8.5)
+texture = ExtResource("3_s1jkr")

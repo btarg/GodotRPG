@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dcks6gn4ttkk5"]
+[gd_scene load_steps=24 format=3 uid="uid://dcks6gn4ttkk5"]
 
 [ext_resource type="Script" path="res://new_ui.gd" id="1_j7u3w"]
 [ext_resource type="Texture2D" uid="uid://bkkqjk3j1xy67" path="res://Assets/GrungeUI-4k.png" id="1_juipf"]
@@ -13,6 +13,7 @@
 [ext_resource type="FontFile" uid="uid://deqhcndqvcsg5" path="res://Assets/Fonts/Arsenal/Arsenal-Italic.ttf" id="8_hufom"]
 [ext_resource type="FontFile" uid="uid://csv28qlfj5i22" path="res://Assets/Fonts/Afacad-VariableFont_wght.ttf" id="13_o250o"]
 [ext_resource type="PackedScene" uid="uid://cm4jd3mpblde0" path="res://Assets/UIElements/heart_no_grid.tscn" id="13_uwlsf"]
+[ext_resource type="PackedScene" uid="uid://da3mueut4kujj" path="res://Assets/UIElements/InventoryItemButtonPaint.tscn" id="14_wfwgm"]
 
 [sub_resource type="FontVariation" id="FontVariation_fenjn"]
 base_font = ExtResource("6_bv1ib")
@@ -76,7 +77,7 @@ script = ExtResource("1_j7u3w")
 
 [node name="GrungeUi-4k" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(576, 324)
+position = Vector2(648, 324)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_juipf")
 
@@ -175,3 +176,27 @@ expand_mode = 1
 
 [node name="HeartNoGrid" parent="." instance=ExtResource("13_uwlsf")]
 layout_mode = 1
+
+[node name="InventoryButton" parent="." instance=ExtResource("14_wfwgm")]
+layout_mode = 1
+offset_left = 660.0
+offset_top = 168.0
+offset_right = 788.0
+offset_bottom = -304.0
+scale = Vector2(0.3, 0.3)
+
+[node name="InventoryButton2" parent="." instance=ExtResource("14_wfwgm")]
+layout_mode = 1
+offset_left = 684.0
+offset_top = 218.0
+offset_right = 812.0
+offset_bottom = -254.0
+scale = Vector2(0.3, 0.3)
+
+[node name="InventoryButton3" parent="." instance=ExtResource("14_wfwgm")]
+layout_mode = 1
+offset_left = 704.0
+offset_top = 268.0
+offset_right = 832.0
+offset_bottom = -204.0
+scale = Vector2(0.3, 0.3)

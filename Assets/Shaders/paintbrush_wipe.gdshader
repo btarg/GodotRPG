@@ -22,7 +22,7 @@ uniform bool flip_wipe_direction = false; // false for normal, true for flipped
 
 void fragment() {
     vec4 tex = texture(TEXTURE, UV);
-    
+
     // At full progress, just show the texture to avoid artifacts and redundant calculations
     if ((progress < 1.0 && !flip_wipe_direction) || (progress > 0.0 && flip_wipe_direction)) {
         float ratio = SCREEN_PIXEL_SIZE.x / SCREEN_PIXEL_SIZE.y;
@@ -30,10 +30,10 @@ void fragment() {
 
         vec4 noise1_tex = texture(noise1, scaled_uv * vec2(1.0, 2.0));
         vec4 noise2_tex = texture(noise2, scaled_uv * vec2(1.0, 2.0));
-        
+
         float noise1_value = noise1_tex.r + noise1_tex.g + noise1_tex.b;
         float noise2_value = noise2_tex.r + noise2_tex.g + noise2_tex.b;
-        
+
         vec4 progress_alpha = vec4(1, 1, 1, step(horizontal ? UV.x : UV.y,
         (noise1_value + noise2_value) * progress * 0.5));
 
