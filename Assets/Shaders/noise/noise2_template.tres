@@ -3,7 +3,7 @@
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_gtbkg"]
 noise_type = 2
 seed = 50
-frequency = 0.0105
+frequency = 0.0001
 fractal_type = 3
 fractal_lacunarity = 2.82
 fractal_gain = 1.06
@@ -12,5 +12,6 @@ domain_warp_enabled = true
 domain_warp_type = 2
 
 [resource]
+generate_mipmaps = false
 seamless = true
 noise = SubResource("FastNoiseLite_gtbkg")

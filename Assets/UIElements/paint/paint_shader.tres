@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dehsw0w224ohy"]
+
+[ext_resource type="Shader" path="res://Assets/Shaders/paintbrush_wipe.gdshader" id="1_psvla"]
+[ext_resource type="Texture2D" uid="uid://kv6kaw4avsje" path="res://Assets/Shaders/noise/noise1_template.tres" id="2_rvxr5"]
+
+[resource]
+shader = ExtResource("1_psvla")
+shader_parameter/progress = 1.0
+shader_parameter/horizontal = true
+shader_parameter/color_overlay = true
+shader_parameter/target_color = Color(0.941176, 0.941176, 0.188235, 1)
+shader_parameter/desired_alpha = 1.0
+shader_parameter/gradient_enabled = false
+shader_parameter/flip_wipe_direction = false
+shader_parameter/noise1 = ExtResource("2_rvxr5")

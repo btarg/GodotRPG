@@ -6,10 +6,8 @@ uniform sampler2D noise2: repeat_enable;
 uniform float progress: hint_range(0.0, 1.0);
 
 uniform bool horizontal = true;
-uniform bool luminance_based_colouring = false;
-// True = black is tinted, false = white is tinted
-uniform bool invert_luminance = false;
-// Colour to tint the texture based on luminance
+// Colour to tint the texture
+uniform bool color_overlay = false;
 uniform vec4 target_color : source_color = vec4(1.0, 0.0, 0.0, 1.0);
 
 // Final alpha to multiply by
@@ -40,21 +38,10 @@ void fragment() {
         if (flip_wipe_direction) {
             progress_alpha.a = 1.0 - progress_alpha.a;
         }
-
         COLOR = tex * progress_alpha;
     }
-    if (luminance_based_colouring) {
-        float luminance = dot(COLOR.rgb, vec3(0.299, 0.587, 0.114));
-        if (invert_luminance) {
-            luminance = 1.0 - luminance;
-        }
-        // Apply gradient instead of solid colour
-        if (gradient_enabled) {
-            vec4 gradient_color = texture(gradient_texture, UV);
-            COLOR.rgb = mix(COLOR.rgb, gradient_color.rgb, luminance);
-        } else {
-            COLOR.rgb = target_color.rgb * luminance;
-        }
-    }
+	if (color_overlay) {
+		COLOR.rgb = target_color.rgb;
+	}
     COLOR.a *= desired_alpha;
 }

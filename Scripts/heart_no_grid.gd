@@ -23,6 +23,8 @@ var animate_health := health:
         _update_segments_fill()
 
 
+const PIXEL_PADDING := 1
+@export var position_offset := Vector2.ZERO
 
 func get_random_position_out_of_bounds() -> Vector2:
     var screen_size := get_viewport().get_visible_rect().size
@@ -55,12 +57,11 @@ func _ready() -> void:
             var pixel_instance := heart_pixel.instantiate() as HeartPixel
 
             var pixel_size := pixel_instance.get_size().x
-            var padding_offset := 1
             # position the target nodes in a grid
             var target_pos := Vector2(
-                ((pixel_size + padding_offset) * pixel_index), 
-                ((pixel_size + padding_offset) * row_num)
-                )
+                (pixel_size + PIXEL_PADDING) * (pixel_index - rows[row_num].size() * 0.5),
+                (pixel_size + PIXEL_PADDING) * (row_num - rows.size() * 0.5)
+            ) + position_offset
 
             # add a target node as a child of this object
             var target := Control.new()
@@ -88,7 +89,8 @@ func cleanup() -> void:
 
     # kill children
     for child in get_children():
-        child.queue_free()
+        if child is HeartPixel:
+            child.queue_free()
 
 func set_health(value: int) -> void:
     var difference: int = abs(health - value)
