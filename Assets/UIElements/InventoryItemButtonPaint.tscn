@@ -6,11 +6,6 @@
 [ext_resource type="FontFile" uid="uid://g7802j74catg" path="res://Assets/Fonts/Arsenal/Arsenal-BoldItalic.ttf" id="2_hy4mq"]
 [ext_resource type="Texture2D" uid="uid://dnetbcnu43gth" path="res://Assets/Icons/elements/heal_element.png" id="3_s1jkr"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_mjkk5"]
-font = ExtResource("2_hy4mq")
-font_size = 100
-font_color = Color(0, 0, 0, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6cl4g"]
 bg_color = Color(0, 0, 0, 1)
 corner_radius_top_left = 1024
@@ -35,7 +30,13 @@ base_font = ExtResource("2_hy4mq")
 font = SubResource("FontVariation_km7ov")
 font_size = 77
 
+[sub_resource type="LabelSettings" id="LabelSettings_mjkk5"]
+font = ExtResource("2_hy4mq")
+font_size = 96
+font_color = Color(0, 0, 0, 1)
+
 [node name="InventoryButton" type="Control"]
+clip_contents = true
 custom_minimum_size = Vector2(380, 50)
 layout_mode = 3
 anchors_preset = 15
@@ -54,19 +55,18 @@ scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_xo5lv")
 centered = false
 
-[node name="Label" type="Label" parent="Paint"]
-offset_left = 285.333
-offset_top = 13.3333
-offset_right = 518.333
-offset_bottom = 165.333
-text = "Cure"
-label_settings = SubResource("LabelSettings_mjkk5")
-
 [node name="CountBG" type="Panel" parent="Paint"]
-offset_left = 925.333
-offset_top = 37.3333
-offset_right = 1209.33
-offset_bottom = 121.333
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -360.0
+offset_top = -45.0
+offset_right = -76.0032
+offset_bottom = 38.9997
+grow_horizontal = 0
+grow_vertical = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_6cl4g")
 
@@ -106,6 +106,22 @@ vertical_alignment = 1
 [node name="ItemIcon" type="Sprite2D" parent="Paint"]
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(201.333, 85.3333)
-scale = Vector2(8.5, 8.5)
+position = Vector2(203.333, 83.3333)
+scale = Vector2(8, 8)
 texture = ExtResource("3_s1jkr")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Paint"]
+offset_left = 280.0
+offset_top = 23.0
+offset_right = 907.0
+offset_bottom = 144.0
+scroll_horizontal = 910
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 0
+
+[node name="Label" type="Label" parent="Paint/ScrollContainer"]
+custom_minimum_size = Vector2(630, 0)
+layout_mode = 2
+text = "Really long item name aaaaaaaaaaaa"
+label_settings = SubResource("LabelSettings_mjkk5")
+vertical_alignment = 1

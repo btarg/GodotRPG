@@ -4,7 +4,7 @@ class_name Inventory
 # Define a dictionary to hold the items and their counts
 var items: Dictionary = {}
 
-signal inventory_updated
+signal inventory_updated(item: BaseInventoryItem, count: int, is_new_item: bool)
 
 func _init() -> void:
     items = {}

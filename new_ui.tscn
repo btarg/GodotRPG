@@ -188,6 +188,7 @@ script = ExtResource("13_w5dpf")
 button_spacing_offset = 0
 
 [node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 0
 offset_left = 1080.0
 offset_top = 166.0
 offset_right = 1086.0
