@@ -18,7 +18,7 @@ var _current_mouse_input_cooldown: float = 0
 @export_group("Spacing")
 @export var button_spacing_offset := 0
 var button_spacing: int = -1
-@export var margin_x := 32
+@export var margin_x := 16
 
 @export var button_scene = preload("res://Assets/UIElements/InventoryItemButtonPaint.tscn") as PackedScene
 @onready var scrollbar_visual := $ClipControl/ColorRect/scroll as ColorRect
@@ -37,6 +37,7 @@ signal item_button_pressed(item: BaseInventoryItem)
 # Debug items
 var test_item := preload("res://Scripts/Inventory/Resources/new_item.tres") as BaseInventoryItem
 var test_item2 := preload("res://Scripts/Inventory/Resources/new_item2.tres") as BaseInventoryItem
+var test_item3 := preload("res://Scripts/Inventory/Resources/new_item3.tres") as BaseInventoryItem
 var test_spell := preload("res://Scripts/Inventory/Resources/Spells/test_healing_spell.tres") as SpellItem
 
 func _ready() -> void:
@@ -44,7 +45,7 @@ func _ready() -> void:
     item_inventory.add_item(test_spell, 15)
     item_inventory.add_item(test_item, 10)
     item_inventory.add_item(test_item2, 10)
-    item_inventory.add_item(test_item, 10)
+    item_inventory.add_item(test_item3, 10)
 
     item_button_pressed.connect(_test_button_pressed)
 
@@ -91,6 +92,8 @@ func _add_button(item: BaseInventoryItem, item_count: int) -> void:
     new_button.set_item_icon(load(item.get_icon_path()) as Texture)
 
     item_button_map[item.item_id] = new_button
+
+    new_button.position.x = margin_x
 
 func _update_count_label(item: BaseInventoryItem) -> void:
     var button = item_button_map.get(item.item_id)
@@ -169,9 +172,9 @@ func _input(event: InputEvent) -> void:
 
 func _on_scroll_timer_timeout() -> void:
     if Input.is_action_pressed("ui_up"):
-        update_index(-1)
+        update_index(-1, false)
     elif Input.is_action_pressed("ui_down"):
-        update_index(1)
+        update_index(1, false)
 
 func _physics_process(delta: float) -> void:
     if buttons.size() == 0:

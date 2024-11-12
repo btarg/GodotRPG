@@ -87,6 +87,11 @@ func _on_focus_entered() -> void:
         return
     tween.tween_property(item_label_scroll, "scroll_horizontal", scroll_max, 1.0)\
             .set_delay(0.15).set_trans(Tween.TRANS_SINE)
+    await tween.finished
+    tween = create_tween()
+    tweens.append(tween)
+    tween.tween_property(item_label_scroll, "scroll_horizontal", 0, 1.0)\
+            .set_delay(1).set_trans(Tween.TRANS_SINE)
 
 func _on_focus_exited() -> void:
     kill_tweens()
