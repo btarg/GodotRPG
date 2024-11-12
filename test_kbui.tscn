@@ -12,7 +12,6 @@ offset_right = 1152.0
 offset_bottom = 648.0
 mouse_filter = 1
 script = ExtResource("1")
-button_spacing_offset = 0
 
 [node name="frame" type="Label" parent="."]
 layout_mode = 0

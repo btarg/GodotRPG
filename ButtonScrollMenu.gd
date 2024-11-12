@@ -1,13 +1,13 @@
 extends Control
 
 var buttons: Array[Control] = []
-var count: Array[float] = []
+var _buttons_count: Array[float] = []
 
 var index: int = 0
 var selected_button: Control = null
 
-var scroll: float = 1
-var current_mouse_input_cooldown: float = 0
+var _scroll: float = 1
+var _current_mouse_input_cooldown: float = 0
 @export var mouse_input_cooldown: float = 0.40
 
 ## How long the UI waits before scrolling again when auto scrolling
@@ -15,11 +15,13 @@ var current_mouse_input_cooldown: float = 0
 ## How long a UI navigation button needs to be held for before auto scrolling starts
 @export var HOLD_INTERVAL: float = 0.25
 
-@export var button_spacing_offset := 50
+@export_group("Spacing")
+@export var button_spacing_offset := 0
 var button_spacing: int = -1
+@export var margin_x := 32
 
 @export var button_scene = preload("res://Assets/UIElements/InventoryItemButtonPaint.tscn") as PackedScene
-@onready var scrollbar_visual := $ColorRect/scroll as ColorRect
+@onready var scrollbar_visual := $ClipControl/ColorRect/scroll as ColorRect
 @onready var SCROLLBAR_BOTTOM := scrollbar_visual.position.y
 
 @onready var scroll_timer := Timer.new()
@@ -42,6 +44,7 @@ func _ready() -> void:
     item_inventory.add_item(test_spell, 15)
     item_inventory.add_item(test_item, 10)
     item_inventory.add_item(test_item2, 10)
+    item_inventory.add_item(test_item, 10)
 
     item_button_pressed.connect(_test_button_pressed)
 
@@ -60,7 +63,7 @@ func _test_button_pressed(item: BaseInventoryItem) -> void:
 func _update_inventory_item(item: BaseInventoryItem, item_count: int, is_new_item: bool) -> void:
     print("Updating inventory: " + item.item_name + " x" + str(item_count))
     if item_count == 0:
-        print("Item count is 0. Removing item.")
+        print("Item _buttons_count is 0. Removing item.")
         _remove_item_button(item)
     else:
         if is_new_item:
@@ -80,7 +83,7 @@ func _add_button(item: BaseInventoryItem, item_count: int) -> void:
     new_button.pressed_item.connect(_handleButtonPressed.bind(new_button))
 
     buttons.append(new_button)
-    count.append(0)
+    _buttons_count.append(0)
     $ClipControl.add_child(new_button)
 
     new_button.set_item_count(item_count)
@@ -101,7 +104,7 @@ func _remove_item_button(item: BaseInventoryItem) -> void:
         item_button_map.erase(item.item_id)
 
 func update_index(new_index: int = -1, wraparound: bool = true, add: bool = true) -> void:
-    current_mouse_input_cooldown = mouse_input_cooldown
+    _current_mouse_input_cooldown = mouse_input_cooldown
 
     if add:
         index += new_index
@@ -116,7 +119,7 @@ func update_index(new_index: int = -1, wraparound: bool = true, add: bool = true
     else:
         index = clamp(index, 0, buttons.size() - 1)
 
-    scroll = clamp((index - 2) * -button_spacing, -button_spacing * (buttons.size() - 1), 0)
+    _scroll = clamp((index - 2) * -button_spacing, -button_spacing * (buttons.size() - 1), 0)
 
     # Update focus
     for i in range(buttons.size()):
@@ -182,11 +185,11 @@ func _physics_process(delta: float) -> void:
     selected_button.grab_focus()
 
     for i in range(buttons.size()):
-        count[i] -= delta
-        if count[i] < 0:
-            var target_position = Vector2(0, i * button_spacing + scroll)
+        _buttons_count[i] -= delta
+        if _buttons_count[i] < 0:
+            var target_position := Vector2(margin_x, i * button_spacing + _scroll)
             if i == 0:
-                target_position.y = scroll
+                target_position.y = _scroll
 
             if is_instance_valid(buttons[i]):
                 buttons[i].position = buttons[i].position.lerp(target_position, delta * 20)
@@ -195,12 +198,12 @@ func _physics_process(delta: float) -> void:
     scrollbar_visual.position.y = lerp(scrollbar_visual.position.y, 2 + (float(index) / float(buttons.size() - 1)) * 188.00, 0.1) if buttons.size() > 1 else 2
     scrollbar_visual.position.y = clamp(scrollbar_visual.position.y, 2, SCROLLBAR_BOTTOM)
 
-    current_mouse_input_cooldown -= delta
-    if current_mouse_input_cooldown < 0:
-        current_mouse_input_cooldown = 0
+    _current_mouse_input_cooldown -= delta
+    if _current_mouse_input_cooldown < 0:
+        _current_mouse_input_cooldown = 0
 
 func _handleButtonFocus(focused_button: Control) -> void:
-    if current_mouse_input_cooldown == 0:
+    if _current_mouse_input_cooldown == 0:
         index = buttons.find(focused_button)
 
 func _handleButtonPressed(pressed_button: InventoryItemButtonPaint) -> void:
@@ -215,7 +218,7 @@ func _delete_button(to_delete: InventoryItemButtonPaint) -> void:
 
     var delete_index := buttons.find(to_delete)
     buttons.remove_at(delete_index)
-    count.erase(delete_index)
+    _buttons_count.erase(delete_index)
     to_delete.queue_free()
 
     # go back one index to keep the same index

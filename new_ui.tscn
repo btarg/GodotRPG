@@ -173,7 +173,7 @@ grow_vertical = 2
 texture = SubResource("GradientTexture2D_08rml")
 expand_mode = 1
 
-[node name="Control" type="Control" parent="."]
+[node name="ButtonScrollMenu" type="Control" parent="."]
 clip_children = 1
 clip_contents = true
 custom_minimum_size = Vector2(32.125, 17.82)
@@ -185,38 +185,52 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("13_w5dpf")
-button_spacing_offset = 0
 
-[node name="ColorRect" type="ColorRect" parent="Control"]
-layout_mode = 0
-offset_left = 1080.0
-offset_top = 166.0
-offset_right = 1086.0
-offset_bottom = 365.0
-mouse_filter = 1
-
-[node name="bg" type="ColorRect" parent="Control/ColorRect"]
-show_behind_parent = true
-layout_mode = 0
-offset_left = -2.0
-offset_top = -2.0
-offset_right = 8.0
-offset_bottom = 201.0
-color = Color(0, 0, 0, 1)
-
-[node name="scroll" type="ColorRect" parent="Control/ColorRect"]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 184.0
-offset_right = 5.0
-offset_bottom = 197.0
-color = Color(0, 0, 0, 1)
-
-[node name="ClipControl" type="Control" parent="Control"]
+[node name="ClipControl" type="Control" parent="ButtonScrollMenu"]
 clip_children = 1
 clip_contents = true
 anchors_preset = 0
-offset_left = 680.0
-offset_top = 156.0
-offset_right = 1064.0
-offset_bottom = 356.0
+offset_left = 656.0
+offset_top = 164.0
+offset_right = 1136.0
+offset_bottom = 381.0
+
+[node name="ColorRect" type="ColorRect" parent="ButtonScrollMenu/ClipControl"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 21.0
+offset_top = -68.5
+offset_right = 27.0
+offset_bottom = 50.5
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="bg" type="ColorRect" parent="ButtonScrollMenu/ClipControl/ColorRect"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -61.5
+offset_right = 8.0
+offset_bottom = 61.5
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="scroll" type="ColorRect" parent="ButtonScrollMenu/ClipControl/ColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -14.0
+offset_right = 2.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 1)

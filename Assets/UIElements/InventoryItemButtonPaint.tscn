@@ -37,13 +37,13 @@ font_color = Color(0, 0, 0, 1)
 
 [node name="InventoryButton" type="Control"]
 clip_contents = true
-custom_minimum_size = Vector2(380, 50)
+custom_minimum_size = Vector2(420, 60)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -772.0
-offset_bottom = -598.0
+offset_right = -732.0
+offset_bottom = -588.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
@@ -51,7 +51,7 @@ script = ExtResource("1_5oq8g")
 
 [node name="Paint" type="Sprite2D" parent="."]
 material = ExtResource("1_fd8nq")
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.33, 0.33)
 texture = ExtResource("1_xo5lv")
 centered = false
 
@@ -106,16 +106,15 @@ vertical_alignment = 1
 [node name="ItemIcon" type="Sprite2D" parent="Paint"]
 texture_filter = 1
 texture_repeat = 1
-position = Vector2(203.333, 83.3333)
+position = Vector2(170, 85)
 scale = Vector2(8, 8)
 texture = ExtResource("3_s1jkr")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Paint"]
-offset_left = 280.0
+offset_left = 240.0
 offset_top = 23.0
 offset_right = 907.0
 offset_bottom = 144.0
-scroll_horizontal = 910
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
