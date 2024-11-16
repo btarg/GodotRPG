@@ -27,7 +27,7 @@ func add_item(item: BaseInventoryItem, count: int = 1) -> void:
     var is_new_item: bool = false
     if item.item_id in items:
         var current_count = items[item.item_id]["count"]
-        var new_count = current_count + count
+        var new_count: int = current_count + count
         # Ensure we do not exceed the max stack count
         if new_count > item.max_stack:
             print("Cannot add more than max stack count")

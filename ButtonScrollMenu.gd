@@ -28,7 +28,31 @@ var button_spacing: int = -1
 @onready var hold_timer := Timer.new()
 
 ### INVENTORY SECTION ###
-@onready var item_inventory := Inventory.new()
+@onready var test_item_inventory := Inventory.new()
+@onready var test_spell_inventory := Inventory.new()
+
+var item_inventory: Inventory:
+    get:
+        return item_inventory
+    set(new_inventory):
+        # disconnect existing signal
+        if item_inventory:
+            item_inventory.inventory_updated.disconnect(_update_inventory_item)
+        # connect new signal for item updates
+        new_inventory.inventory_updated.connect(_update_inventory_item)
+
+        if not buttons.is_empty():
+            delete_all_buttons()
+
+        # update all items
+        # if we change the connected inventory after it has its items already,
+        # we cannot rely fully on the signal to update the UI
+        for item_id in new_inventory.items.keys():
+            var item_entry: BaseInventoryItem = new_inventory.get_item(item_id)
+            _update_inventory_item(item_entry, new_inventory.get_item_count(item_id), true)
+
+        item_inventory = new_inventory
+
 # Map item id to button
 var item_button_map: Dictionary = {}
 
@@ -41,11 +65,13 @@ var test_item3 := preload("res://Scripts/Inventory/Resources/new_item3.tres") as
 var test_spell := preload("res://Scripts/Inventory/Resources/Spells/test_healing_spell.tres") as SpellItem
 
 func _ready() -> void:
-    item_inventory.inventory_updated.connect(_update_inventory_item)
-    item_inventory.add_item(test_spell, 15)
-    item_inventory.add_item(test_item, 10)
-    item_inventory.add_item(test_item2, 10)
-    item_inventory.add_item(test_item3, 10)
+
+    test_spell_inventory.add_item(test_spell, 15)
+    test_item_inventory.add_item(test_item, 10)
+    test_item_inventory.add_item(test_item2, 10)
+    test_item_inventory.add_item(test_item3, 10)
+
+    item_inventory = test_item_inventory
 
     item_button_pressed.connect(_test_button_pressed)
 
@@ -136,7 +162,11 @@ func _input(event: InputEvent) -> void:
     if button_spacing == -1:
         return
     if Input.is_action_just_pressed("ui_cancel"):
-        item_inventory.remove_item(test_item, 1)
+        
+        if item_inventory == test_item_inventory:
+            item_inventory = test_spell_inventory
+        else:
+            item_inventory = test_item_inventory
 
     if Input.is_action_just_pressed("ui_up"):
         update_index(-1)
@@ -231,4 +261,11 @@ func _delete_button(to_delete: InventoryItemButtonPaint) -> void:
 func delete_all_buttons() -> void:
     for btn in buttons:
         if btn is InventoryItemButtonPaint:
-            _delete_button(btn)
+            btn.queue_free()
+    buttons.clear()
+    _buttons_count.clear()
+    item_button_map.clear()
+
+    index = 0
+    _scroll = 1
+    _current_mouse_input_cooldown = 0

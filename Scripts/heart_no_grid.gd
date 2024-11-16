@@ -4,6 +4,8 @@ extends Control
 @onready var style_empty := preload("res://Assets/Themes/heart/pixel_black.tres") as StyleBoxFlat
 @onready var style_full := preload("res://Assets/Themes/heart/pixel_red.tres") as StyleBoxFlat
 
+@onready var background_node := $"../HeartBackground" as Polygon2D
+
 var spawned_heart_pixels: Array[Panel] = []
 const rows: Array[Array] = [
         [false, true, false, true, false],
@@ -127,10 +129,14 @@ func _update_panel(to_update: Panel, full: bool = true) -> void:
     to_update.remove_theme_stylebox_override("panel")
     var style := style_full if full else style_empty
     to_update.add_theme_stylebox_override("panel", style)
+    # TODO: add animation for filling and emptying the pixel (e.g. shake)
 
 func update_tracking_position(track: Vector2) -> void:
     set_global_position(track)
     get_tree().call_group("HeartSegment", "update_track_position", track)
+    
+    if background_node:
+        background_node.set_global_position(track)
 
 func _input(event: InputEvent) -> void:
     if event.is_echo():
@@ -152,7 +158,10 @@ func _input(event: InputEvent) -> void:
         elif event.keycode == KEY_C:
             cleanup()
 
-    # on click set global position
-    if event is InputEventMouseButton:
-        if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-            update_tracking_position(get_viewport().get_mouse_position())
+    # # on click set global position
+    # if event is InputEventMouseButton:
+    #     if event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+    #         update_tracking_position(get_viewport().get_mouse_position())
+
+    if event is InputEventMouseMotion:
+        update_tracking_position(get_viewport().get_mouse_position())
